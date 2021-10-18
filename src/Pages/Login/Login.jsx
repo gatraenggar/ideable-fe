@@ -10,7 +10,7 @@ export default function Login() {
                     position: "absolute",
                     backgroundColor: "#272e78",
                     height: "100vh",
-                    width: "30px",
+                    width: "20px",
                 }}>
             </div>
 

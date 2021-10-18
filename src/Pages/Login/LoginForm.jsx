@@ -1,11 +1,11 @@
-import Ideable from '../../Assets/Ideable.svg'
+import IdeableLogo from '../../Assets/ideable-logo.svg'
 
 export default function LoginForm () {
     return(
         <>
             <form className="w-75 p-3">
                 <div className="d-flex justify-content-start align-items-center mb-2">
-                    <img src={Ideable} alt="Ideable Logo" className="w-25"/>
+                    <img src={IdeableLogo} alt="Ideable Logo" className="w-25"/>
                     <div className="px-1 fs-6">SIGN IN TO YOUR ACCOUNT</div>
                 </div>
 

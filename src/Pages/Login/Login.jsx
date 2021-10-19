@@ -1,21 +1,22 @@
-import LoginForm from "./LoginForm";
+import LoginForm from "./Components/LoginForm";
 import LoginCover from "../../Assets/login-cover.svg"
+import GoogleButton from "./Components/GoogleButton";
+import LeftPageOutline from "./Components/LeftPageOutline";
+import SeparatorLine from "./Components/SeparatorLine";
+import SignUpLink from "./Components/SignUpLink";
 
 export default function Login() {
     return (
         <div className="row vh-100" style={{backgroundColor: "#f6faf9"}}>
-            <div
-                className="d-none d-xl-block"
-                style={{
-                    position: "absolute",
-                    backgroundColor: "#272e78",
-                    height: "100vh",
-                    width: "20px",
-                }}>
-            </div>
+            <LeftPageOutline/>
 
             <div className="col-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-center py-5">
-                <LoginForm />
+                <div className="w-75 p-3">
+                    <LoginForm/>
+                    <SeparatorLine/>
+                    <GoogleButton/>
+                    <SignUpLink/>
+                </div>
             </div>
 
             <div

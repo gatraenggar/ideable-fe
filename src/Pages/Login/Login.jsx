@@ -1,5 +1,5 @@
 import LoginForm from "./LoginForm";
-import LandingPage from "../../Assets/landing-page.svg"
+import LoginCover from "../../Assets/login-cover.svg"
 
 export default function Login() {
     return (
@@ -21,7 +21,7 @@ export default function Login() {
             <div
                 className="col-md-6 col-lg-8 d-none d-md-flex justify-content-end align-items-end pb-2"
                 style={{
-                    backgroundImage: `url(${LandingPage})`,
+                    backgroundImage: `url(${LoginCover})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}

@@ -1,6 +1,30 @@
+import { useState } from 'react'
 import IdeableLogo from '../../Assets/ideable-logo.svg'
+import validator from '../../Utils/validator'
+import HttpPostLogin from '../../API/LoginAPI'
 
 export default function LoginForm () {
+    const [form, setForm] = useState({
+        email: "m.gatraenggar@gmail.com",
+        password: "abcd1234",
+    })
+    const [isEmailValid, setIsEmailValid] = useState(true)
+    const [isPasswordValid, setIsPasswordValid] = useState(true)
+
+    const login = async (e) => {
+        e.preventDefault()
+        
+        setIsEmailValid(validator.isEmail(form.email))
+        setIsPasswordValid(validator.isPassword(form.password))
+
+        if (validator.isEmail(form.email) && validator.isPassword(form.password)) {
+            const res = await HttpPostLogin(form)
+            console.log(res)
+            
+            window.location.href = '/dashboard'
+        }
+    }
+
     return(
         <>
             <form className="w-75 p-3">
@@ -10,17 +34,27 @@ export default function LoginForm () {
                 </div>
 
                 <div className="mb-3">
-                    <label for="email" className="form-label">Email</label>
-                    <input type="email" className="form-control"/>
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input type="email" className="form-control" onChange={(e) => setForm({...form, email: e.target.value.trim()}) } />
+
+                    <div className="mt-1 text-danger" hidden={isEmailValid}>
+                        *Email is not valid
+                    </div>
                 </div>
+
                 <div className="mb-4">
-                    <label for="password" className="form-label">Password</label>
-                    <input type="password" className="form-control"/>
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input type="password" className="form-control" onChange={(e) => setForm({...form, password: e.target.value}) } />
+                    
+                    <div className="mt-1 text-danger" hidden={isPasswordValid}>
+                        *Password must be at least 8-20 characters
+                    </div>
                 </div>
+
                 <div>
                     <input 
                         className="btn btn-primary w-100" type="submit" value="Login"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => login(e)}
                     />
                 </div>
 

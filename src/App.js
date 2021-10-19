@@ -1,5 +1,6 @@
 import { BrowserRouter, Switch, Route, Redirect, } from 'react-router-dom';
 import Login from './Pages/Login/Login';
+import Dashboard from "./Pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Route exact path="/login" component={Login}>
           <Redirect to="/" />
         </Route>
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
     </BrowserRouter>
   );

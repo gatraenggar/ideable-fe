@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { httpPostLogin } from '../../../HttpAPI/PostLogin'
-import IdeableLogo from '../../../Assets/ideable-logo.svg'
-import Validator from '../../../Utils/validator'
+import { httpPostLogin } from '../../HttpAPI/PostLogin'
+import IdeableLogo from '../../Assets/ideable-logo.svg'
+import Validator from '../../Utils/validator'
 
 export default function LoginForm () {
     const [form, setForm] = useState({

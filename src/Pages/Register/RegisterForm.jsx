@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { httpPostLogin } from '../../HttpAPI/PostLogin'
+import { httpPostRegister } from '../../HttpAPI/PostRegister'
 import IdeableLogo from '../../Assets/ideable-logo.svg'
 import Validator from '../../Utils/validator'
 
@@ -12,18 +12,42 @@ export default function LoginForm () {
         confirmPassword: "",
     })
     const [isEmailValid, setIsEmailValid] = useState(true)
+    const [isFirstNameValid, setIsFirstNameValid] = useState(true)
+    const [isLastNameValid, setIsLastNameValid] = useState(true)
     const [isPasswordValid, setIsPasswordValid] = useState(true)
-    const [isNameValid, setIsNameValid] = useState(true)
+    const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true)
+    const [isHttpLoading, setIsHttpLoading] = useState(false)
+    const [httpError, setHttpError] = useState("")
 
     const register = async (e) => {
         e.preventDefault()
         
         setIsEmailValid(Validator.isEmail(form.email))
+        setIsFirstNameValid(Validator.isFirstName(form.firstName))
+        setIsLastNameValid(Validator.isLastName(form.lastName))
         setIsPasswordValid(Validator.isPassword(form.password))
+        setIsConfirmPasswordValid(Validator.isPasswordConfirmed(form.password, form.confirmPassword))
 
-        if (Validator.isEmail(form.email) && Validator.isPassword(form.password)) {
-            // const httpResponse = await httpPostRegister(form)
-            // console.log(httpResponse)
+        if (
+            Validator.isEmail(form.email) &&
+            Validator.isFirstName(form.firstName) &&
+            Validator.isLastName(form.lastName) &&
+            Validator.isPassword(form.password) &&
+            Validator.isPasswordConfirmed(form.password, form.confirmPassword)
+        ) {
+            setIsHttpLoading(true)
+            const httpResponse = await httpPostRegister({
+                "email": form.email,
+                "first_name": form.firstName,
+                "last_name": form.lastName,
+                "password": form.password,
+            })
+            console.log(httpResponse)
+            
+            if (httpResponse.status === "failed") { setHttpError(httpResponse.message) } 
+            else { setHttpError("") }
+
+            setIsHttpLoading(false)
         }
     }
 
@@ -52,19 +76,20 @@ export default function LoginForm () {
                 </div>
             </div>
 
-            <div className="d-flex justify-content-between mb-2">
-                <div style={{marginRight: "4px"}}>
-                    <label htmlFor="first-name" className="form-label">First Name</label>
-                    <input type="text" className="form-control" onChange={(e) => setForm({...form, firstName: e.target.value}) } />
+            <div className="mb-2">
+                <div className="d-flex justify-content-between">
+                    <div style={{marginRight: "4px"}}>
+                        <label htmlFor="first-name" className="form-label">First Name</label>
+                        <input type="text" className="form-control" onChange={(e) => setForm({...form, firstName: e.target.value.trim()}) } />
+                    </div>
+                    <div style={{marginLeft: "4px"}}>
+                        <label htmlFor="last-name" className="form-label">Last Name</label>
+                        <input type="text" className="form-control" onChange={(e) => setForm({...form, lastName: e.target.value.trim()}) } />
+                    </div>
                 </div>
 
-                <div style={{marginLeft: "4px"}}>
-                    <label htmlFor="last-name" className="form-label">Last Name</label>
-                    <input type="text" className="form-control" onChange={(e) => setForm({...form, lastName: e.target.value}) } />
-                </div>
-
-                <div className="mt-1 text-danger" hidden={isNameValid}>
-                    *Each name has maximum 20 characters
+                <div className="mt-1 text-danger" hidden={isFirstNameValid && isLastNameValid}>
+                    *Each name should has 1-20 characters (alphabets & space only)
                 </div>
             </div>
 
@@ -72,19 +97,25 @@ export default function LoginForm () {
                 <label htmlFor="password" className="form-label">Password</label>
                 <input type="password" className="form-control mb-2" onChange={(e) => setForm({...form, password: e.target.value}) } />
 
+                <div className="mt-1 text-danger" hidden={isPasswordValid}>
+                    *Password must be at least 8-20 characters
+                </div>
+
                 <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
                 <input type="password" className="form-control" onChange={(e) => setForm({...form, confirmPassword: e.target.value}) } />
                 
-                <div className="mt-1 text-danger" hidden={isPasswordValid}>
-                    *Password must be at least 8-20 characters
+                <div className="mt-1 text-danger" hidden={isConfirmPasswordValid}>
+                    *Confirmation password does not match
                 </div>
             </div>
 
             <div>
-                <input 
-                    className="btn btn-primary w-100 mt-2" type="submit" value="Register"
-                    onClick={(e) => register(e)}
-                />
+                <button className="btn btn-primary w-100 mt-2" type="submit" onClick={(e) => register(e)} disabled={ isHttpLoading }>
+                    { isHttpLoading? "Loading..." : "Register" }
+                </button>
+                <div className="mt-2 text-center text-danger" hidden={httpError === "" || isHttpLoading}>
+                    { httpError }
+                </div>
             </div>
         </form>
     )

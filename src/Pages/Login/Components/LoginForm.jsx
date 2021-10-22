@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import { httpPostLogin } from '../../../HttpAPI/PostLogin'
 import IdeableLogo from '../../../Assets/ideable-logo.svg'
-import HttpPostLogin from '../../../API/LoginAPI'
-import validator from '../../../Utils/validator'
+import Validator from '../../../Utils/validator'
 
 export default function LoginForm () {
     const [form, setForm] = useState({
-        email: "m.gatraenggar@gmail.com",
-        password: "abcd1234",
+        email: "",
+        password: "",
     })
     const [isEmailValid, setIsEmailValid] = useState(true)
     const [isPasswordValid, setIsPasswordValid] = useState(true)
@@ -14,14 +14,12 @@ export default function LoginForm () {
     const login = async (e) => {
         e.preventDefault()
         
-        setIsEmailValid(validator.isEmail(form.email))
-        setIsPasswordValid(validator.isPassword(form.password))
+        setIsEmailValid(Validator.isEmail(form.email))
+        setIsPasswordValid(Validator.isPassword(form.password))
 
-        if (validator.isEmail(form.email) && validator.isPassword(form.password)) {
-            const res = await HttpPostLogin(form)
-            console.log(res)
-            
-            window.location.href = '/dashboard'
+        if (Validator.isEmail(form.email) && Validator.isPassword(form.password)) {
+            const httpResponse = await httpPostLogin(form)
+            console.log(httpResponse)
         }
     }
 

@@ -10,7 +10,8 @@ export default function LoginForm () {
     })
     const [isEmailValid, setIsEmailValid] = useState(true)
     const [isPasswordValid, setIsPasswordValid] = useState(true)
-
+    const [isHttpLoading, setIsHttpLoading] = useState(false)
+    const [httpError, setHttpError] = useState("")
     const login = async (e) => {
         e.preventDefault()
         
@@ -18,8 +19,14 @@ export default function LoginForm () {
         setIsPasswordValid(Validator.isPassword(form.password))
 
         if (Validator.isEmail(form.email) && Validator.isPassword(form.password)) {
+            setIsHttpLoading(true)
             const httpResponse = await httpPostLogin(form)
             console.log(httpResponse)
+
+            if (httpResponse.status === "failed") { setHttpError(httpResponse.message) } 
+            else { setHttpError("") }
+
+            setIsHttpLoading(false)
         }
     }
 
@@ -49,10 +56,12 @@ export default function LoginForm () {
             </div>
 
             <div>
-                <input 
-                    className="btn btn-primary w-100" type="submit" value="Login"
-                    onClick={(e) => login(e)}
-                />
+                <button className="btn btn-primary w-100" type="submit" onClick={(e) => login(e)} disabled={ isHttpLoading }>
+                    { isHttpLoading? "Loading..." : "Login" }
+                </button>
+                <div className="mt-2 text-center text-danger" hidden={httpError === "" || isHttpLoading}>
+                    { httpError }
+                </div>
             </div>
         </form>
     )

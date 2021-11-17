@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { WorkspaceIcon, FolderIcon, ListIcon } from "./Utils";
-import { workspaces } from "./fakeWorkspaces"
+import { fakeWorkspaces as workspaces } from "../../Constants/fakeWorkspaces"
 
 export default function WorkspaceList({isDarkTab}){
     return(

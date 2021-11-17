@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { httpPostRegister } from '../../HttpAPI/PostRegister'
+import httpPostRegister from '../../API/HTTP/PostRegister'
 import IdeableLogo from '../../Assets/ideable-logo.svg'
 import Validator from '../../Utils/validator'
 

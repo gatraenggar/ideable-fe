@@ -1,9 +1,10 @@
+import { httpURI } from "../../Constants/httpURI"
 /**
  * @param form Javascript object
  * @returns JSON
  */
- export const httpPostRegister = async (form) => {
-    const response = await fetch('http://localhost:8080/v1/auth/register', {
+ const httpPostRegister = async (form) => {
+    const response = await fetch(`${httpURI}/v1/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
@@ -15,3 +16,5 @@
 
     return response
 }
+
+export default httpPostRegister

@@ -1,5 +1,4 @@
-module.exports = {
-  workspaces: [
+export const fakeWorkspaces = [
     {
         title: "Fakebook",
         folders: [
@@ -70,4 +69,3 @@ module.exports = {
         ]
     },
   ]
-}

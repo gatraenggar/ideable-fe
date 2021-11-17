@@ -1,9 +1,10 @@
+import { httpURI } from "../../Constants/httpURI"
 /**
  * @param form Javascript object
  * @returns JSON
  */
  const httpPostGoogleOAuth = async (form) => {
-    const response = await fetch('http://localhost:8080/v1/oauth/google/login/callback', {
+    const response = await fetch(`${httpURI}/v1/oauth/google/login/callback`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',

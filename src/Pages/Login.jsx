@@ -1,8 +1,8 @@
-import LoginForm from "./LoginForm";
-import LoginCover from "../../Assets/login-cover.svg"
-import GoogleButton from "../../Components/GoogleButton";
-import RowSeparatorLine from "../../Components/RowSeparatorLine";
-import { LeftPageOutline, SignUpLink } from "./Utils"
+import LoginForm from "../Components/Login/LoginForm";
+import LoginCover from "../Assets/login-cover.svg"
+import GoogleButton from "../Components/Common/GoogleButton";
+import LoginButtonSeparator from "../Components/Common/LoginButtonSeparator";
+import { LeftPageOutline, SignUpLink } from "../Components/Login/Utils"
 
 export default function Login() {
     return (
@@ -13,7 +13,7 @@ export default function Login() {
                 <div className="col-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-center py-5">
                     <div className="w-75 p-3">
                         <LoginForm/>
-                        <RowSeparatorLine/>
+                        <LoginButtonSeparator/>
                         <GoogleButton/>
                         <SignUpLink/>
                     </div>

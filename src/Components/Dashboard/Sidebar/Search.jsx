@@ -1,4 +1,4 @@
-import { SearchIcon, } from "./Utils";
+import { SearchIcon, } from "../Utils";
 
 export default function SidebarSearch({isDarkTab}){
     return(

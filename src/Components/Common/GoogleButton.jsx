@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { attachGoogleSign } from '../API/HTTP/PostGoogleOAuth';
-import GoogleImage from '../Assets/google.png';
+import { attachGoogleSign } from '../../API/HTTP/PostGoogleOAuth';
+import GoogleImage from '../../Assets/google.png';
 
 export default function GoogleButton() {
     useEffect(() => {

@@ -1,6 +1,6 @@
-import { LightLeftArrow, DarkLeftArrow } from "./Utils";
-import IdeableLogo from "../../Assets/ideable-logo.svg";
-import IdeableLogoLight from "../../Assets/ideable-logo-light.svg";
+import { LightLeftArrow, DarkLeftArrow } from "../Utils";
+import IdeableLogo from "../../../Assets/ideable-logo.svg";
+import IdeableLogoLight from "../../../Assets/ideable-logo-light.svg";
 
 export default function SidebarHeader({isDarkTab, showTab, setShowTab}){
     return(

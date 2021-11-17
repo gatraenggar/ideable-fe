@@ -1,4 +1,4 @@
-export default function RowSeparatorLine(){
+export default function LoginButtonSeparator(){
     return(
         <div className="d-flex flex-row my-4 align-items-center">
             <hr className="border border-secondary w-100" />

@@ -1,4 +1,4 @@
-import { ToggleSwitch } from "./Utils";
+import { ToggleSwitch } from "../Utils";
 
 export default function SidebarThemeToggler({isDarkTab, setIsDarkTab}){
     return(

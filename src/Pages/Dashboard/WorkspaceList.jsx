@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { WorkspaceIcon, FolderIcon, ListIcon } from "./Utils";
+import { AllWorkspacesIcon, WorkspaceIcon, FolderIcon, ListIcon } from "./Utils";
 import { fakeWorkspaces as workspaces } from "../../Constants/fakeWorkspaces"
 
 export default function WorkspaceList({isDarkTab}){
     return(
         <div className="fw-bold text-secondary" style={{ fontSize: "0.9em" }}>
+            <AllWorkspacesIcon isDarkTab={isDarkTab} />
             {
                 workspaces.map(({ title, folders }, index) => {
                     return (

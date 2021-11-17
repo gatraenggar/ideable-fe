@@ -30,6 +30,17 @@ export const SearchIcon = ({isDarkTab}) => {
     )
 }
 
+export const AllWorkspacesIcon = ({isDarkTab}) => {
+    return(
+        <div className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab? "dark-ws-icon-hover" : "light-ws-icon-hover"}` } style={{marginBottom: "6px", fontSize: "1.05em"}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} class="bi bi-exclude" viewBox="0 0 16 16">
+                <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm12 2H5a1 1 0 0 0-1 1v7h7a1 1 0 0 0 1-1V4z"/>
+            </svg>
+            <span className="mx-2"> Everything </span>
+        </div>
+    )
+}
+
 export const WorkspaceIcon = ({isDarkTab, workspaceTitle}) => {
     const [isOpen, setIsOpen] = useState(false)
 

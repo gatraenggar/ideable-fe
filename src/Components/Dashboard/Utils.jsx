@@ -33,7 +33,7 @@ export const SearchIcon = ({isDarkTab}) => {
 export const AllWorkspacesIcon = ({isDarkTab}) => {
     return(
         <div className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab? "dark-ws-icon-hover" : "light-ws-icon-hover"}` } style={{marginBottom: "6px", fontSize: "1.05em"}}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} class="bi bi-exclude" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} className="bi bi-exclude" viewBox="0 0 16 16">
                 <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm12 2H5a1 1 0 0 0-1 1v7h7a1 1 0 0 0 1-1V4z"/>
             </svg>
             <span className="mx-2"> Everything </span>
@@ -41,13 +41,13 @@ export const AllWorkspacesIcon = ({isDarkTab}) => {
     )
 }
 
-export const WorkspaceIcon = ({isDarkTab, workspaceTitle}) => {
+export const DropdownArrowIcon = ({isDarkTab, workspaceTitle}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     if(isOpen){
         return(
             <div className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab? "dark-ws-icon-hover" : "light-ws-icon-hover"}` } style={{marginBottom: "6px"}} onClick={() => setIsOpen(false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} className="bi bi-caret-down-fill" viewBox="0 0 16 16">
                     <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                 </svg>
                 <span className="mx-2"> {workspaceTitle} </span>
@@ -57,7 +57,7 @@ export const WorkspaceIcon = ({isDarkTab, workspaceTitle}) => {
 
     return(
         <div className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab? "dark-ws-icon-hover" : "light-ws-icon-hover"}` } style={{marginBottom: "6px"}} onClick={() => setIsOpen(true)}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill={isDarkTab? "white" : "grey"} className="bi bi-caret-right-fill" viewBox="0 0 16 16">
                 <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
             </svg>
             <span className="mx-2"> {workspaceTitle} </span>
@@ -90,7 +90,7 @@ export const FolderIcon = ({folderTitle}) => {
 
 export const ListIcon = () => {
     return(
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-card-list" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" className="bi bi-card-list" viewBox="0 0 16 16">
             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
             <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
         </svg>

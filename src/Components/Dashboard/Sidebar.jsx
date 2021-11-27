@@ -4,7 +4,7 @@ import Search from "./Sidebar/Search";
 import WorkspaceList from "./Sidebar/WorkspaceList";
 import ThemeToggler from "./Sidebar/ThemeToggler";
 
-export default function DashboardSidebar({ showTab, setShowTab }) {
+export default function Sidebar({ showTab, setShowTab }) {
     const [isDarkTab, setIsDarkTab] = useState(false);
 
     return (

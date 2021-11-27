@@ -2,7 +2,7 @@ import { MenuIcon } from "../Utils";
 
 export default function Navbar({showTab, setShowTab}) {
   return(
-    <div className="d-flex justify-content-between align-items-center px-2 py-3 bg-light">
+    <div className="d-flex justify-content-between align-items-center sticky-top px-2 py-3 bg-light" style={{ height: "8vh" }}>
         <div className="d-flex justify-content-between align-items-center">
             <div
                 className={`${showTab ? "d-none" : "d-flex mx-3"} justify-content-between align-items-center`}

@@ -88,3 +88,8 @@ code {
 .sidebar-workspace-scroller::-webkit-scrollbar-thumb:hover {
   background: grey; 
 }
+
+/* New Task Button */
+.new-task-btn:hover {
+  background-color: rgba(128, 128, 128, 0.11);
+}

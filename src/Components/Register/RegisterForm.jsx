@@ -98,14 +98,14 @@ export default function RegisterForm() {
 
                 <div className="mb-4">
                     <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control mb-2" onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                    <input type="password" className="form-control mb-2" autoComplete="" onChange={(e) => setForm({ ...form, password: e.target.value })} />
 
                     <div className="mt-1 text-danger" hidden={isPasswordValid}>
                         *Password must be at least 8-20 characters
                     </div>
 
                     <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
-                    <input type="password" className="form-control" onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} />
+                    <input type="password" className="form-control" autoComplete="" onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} />
 
                     <div className="mt-1 text-danger" hidden={isConfirmPasswordValid}>
                         *Confirmation password does not match

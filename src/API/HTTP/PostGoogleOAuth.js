@@ -1,21 +1,22 @@
-import { httpURI } from "../../Constants/httpURI"
+import { httpURI } from "../../Constants/httpURI";
 /**
  * @param form Javascript object
  * @returns JSON
  */
- const httpPostGoogleOAuth = async (form) => {
+const httpPostGoogleOAuth = async (form) => {
     const response = await fetch(`${httpURI}/v1/oauth/google/login/callback`, {
         method: 'POST',
         headers: {
-            'Content-Type' : 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(form),
+        credentials: 'include',
     })
-    .then((res)=> res.json())
-    .catch((error)=> error)
+        .then((res) => res)
+        .catch((error) => error);
 
-    return response
-}
+    return response;
+};
 
 /**
  * loads the necessary JavaScript library needed to use Google API.
@@ -58,13 +59,22 @@ export const attachGoogleSign = (googleSignButton) => {
                             "email": profile.getEmail(),
                             "first_name": profile.getGivenName(),
                             "last_name": profile.getFamilyName(),
+                        };
+
+                        const httpResponse = await httpPostGoogleOAuth(payload);
+                        const responseJSON = await httpResponse.json()
+
+                        if (responseJSON.status !== "success") {
+                            alert(responseJSON.message);
+                            return;
                         }
 
-                        const httpResponse = await httpPostGoogleOAuth(payload)
-                        console.log(httpResponse)
+                        localStorage.setItem("user", JSON.stringify(responseJSON.data));
+                        if (httpResponse.status === 201) alert("We've send you a verification email")
+
+                        window.location.replace("/dashboard");
 
                     }, function (error) {
-                        console.log(error)
                         return error;
                     }
                 );
@@ -73,4 +83,4 @@ export const attachGoogleSign = (googleSignButton) => {
     };
 
     loadGoogleScript();
-}
+};

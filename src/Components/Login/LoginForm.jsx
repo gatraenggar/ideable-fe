@@ -49,7 +49,7 @@ export default function LoginForm () {
 
             <div className="mb-4">
                 <label htmlFor="password" className="form-label">Password</label>
-                <input type="password" className="form-control" onChange={(e) => setForm({...form, password: e.target.value}) } />
+                <input type="password" className="form-control" autoComplete="" onChange={(e) => setForm({...form, password: e.target.value}) } />
                 
                 <div className="mt-1 text-danger" hidden={isPasswordValid}>
                     *Password must be at least 8-20 characters

@@ -22,12 +22,18 @@ export default function LoginForm () {
         if (Validator.isEmail(form.email) && Validator.isPassword(form.password)) {
             setIsHttpLoading(true)
             const httpResponse = await httpPostLogin(form)
-            console.log(httpResponse)
+            const responseJSON = await httpResponse.json()
+            setIsHttpLoading(false)
 
-            if (httpResponse.status === "failed") { setHttpError(httpResponse.message) } 
+            if (responseJSON.status === "failed") { 
+                setHttpError(responseJSON.message)
+                return
+            }
             else { setHttpError("") }
 
-            setIsHttpLoading(false)
+            localStorage.setItem("user", JSON.stringify(responseJSON.data));
+
+            window.location.replace("/dashboard")
         }
     }
 

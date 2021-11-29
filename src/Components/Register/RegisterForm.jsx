@@ -48,7 +48,16 @@ export default function RegisterForm() {
 
             setIsHttpLoading(false);
 
-            localStorage.setItem("user", JSON.stringify(httpResponse.data))
+            const responseJSON = await httpResponse.json()
+
+            if (responseJSON.status !== "success") {
+                alert(responseJSON.message);
+                return;
+            }
+
+            localStorage.setItem("user", JSON.stringify(responseJSON.data));
+            if (httpResponse.status === 201) alert("We've send you a verification email")
+
             window.location.replace("/dashboard")
         }
     };

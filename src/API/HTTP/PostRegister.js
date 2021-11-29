@@ -9,10 +9,10 @@ const httpPostRegister = async (form) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(form),
+        credentials: 'include',
     })
-        .then((res) => res.json())
+        .then((res) => res)
         .catch((error) => error);
 
     return response;

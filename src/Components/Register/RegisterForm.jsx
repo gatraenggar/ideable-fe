@@ -54,7 +54,7 @@ export default function RegisterForm() {
             localStorage.setItem("user", JSON.stringify(responseJSON.data));
             if (httpResponse.status === 201) alert("We've send you a verification email")
 
-            window.location.replace("/dashboard")
+            window.location.href = "/dashboard"
         }
     };
 

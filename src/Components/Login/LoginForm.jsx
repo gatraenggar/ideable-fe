@@ -17,9 +17,10 @@ export default function LoginForm () {
         e.preventDefault()
         
         setIsEmailValid(Validator.isEmail(form.email))
-        setIsPasswordValid(Validator.isPassword(form.password))
+        setIsPasswordValid(form.password !== "")
+        if (form.password === "") return
 
-        if (Validator.isEmail(form.email) && Validator.isPassword(form.password)) {
+        if (Validator.isEmail(form.email)) {
             setIsHttpLoading(true)
             const httpResponse = await httpPostLogin(form)
             const responseJSON = await httpResponse.json()
@@ -58,7 +59,7 @@ export default function LoginForm () {
                 <input type="password" className="form-control" autoComplete="" onChange={(e) => setForm({...form, password: e.target.value}) } />
                 
                 <div className="mt-1 text-danger" hidden={isPasswordValid}>
-                    *Password must be at least 8-20 characters
+                    *Password can't be empty
                 </div>
             </div>
 

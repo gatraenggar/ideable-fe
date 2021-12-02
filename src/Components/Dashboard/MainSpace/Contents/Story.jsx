@@ -16,13 +16,13 @@ function ListItem({ item, isItemOpen, setIsItemOpen, childItem = false }) {
           </span>
         </div>
 
-        <div className={childItem ? "mx-3" : "mx-2"} style={{ display: "inline-block" }}>
+        <div className={childItem ? "mx-3" : ""} style={{ display: "inline-block" }}>
           {
             childItem ?
-              <span> &#9643; &nbsp; {item.title} </span>
+              <span> &#9643; &nbsp; {item.name} </span>
               :
               <>
-                <span> {item.title} </span>
+                <span> &#9643; &nbsp; {item.name} </span>
 
                 <span className="mx-1 px-1 border rounded-top rounded-bottom" hidden={!item.tasks.length} style={{ display: "inline-block", cursor: "pointer" }}>
                   <span onClick={() => setIsItemOpen(!isItemOpen)}>

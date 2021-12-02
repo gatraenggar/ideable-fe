@@ -55,10 +55,14 @@ export default function Dashboard() {
             const folderIDs = folders.map(({ uuid }) => uuid)
     
             const lists = await getLists(workspaceIDs, folderIDs)
+            const mappedLists = lists.map((list) => ({
+                ...list,
+                stories: [],
+            }))
     
             const folderMap = folders.map((folder) => ({
                 ...folder,
-                lists: lists.filter(({ folder_uuid }) => folder.uuid === folder_uuid)
+                lists: mappedLists.filter(({ folder_uuid }) => folder.uuid === folder_uuid)
             }))
     
             const workspaceMap = workspaces.map((workspace) => ({

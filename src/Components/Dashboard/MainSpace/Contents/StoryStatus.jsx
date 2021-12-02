@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Story from "./Story";
-import { DropdownArrowIcon } from "./Utils";
+import { DropdownArrowIcon, AssigneeIcon, PriorityFlag } from "./Utils";
 
 export default function StoryStatus({ title, stories, labelColor }) {
   const [isStoriesOpen, setIsStoriesOpen] = useState(true);
@@ -46,13 +46,16 @@ export default function StoryStatus({ title, stories, labelColor }) {
             isStoriesOpen ?
               <>
                 {
-                  stories.map((story, index) => {
-                    return (
-                      <Story key={index} story={story} />
-                    );
-                  })
+                  stories.length ?
+                    stories.map((story, index) => {
+                      return (
+                        <Story key={index} story={story} />
+                      );
+                    })
+                    :
+                    <AddNewStory />
                 }
-                <div className="m-1 px-2 py-1 rounded-top rounded-bottom text-secondary new-task-btn" style={{ width: "fit-content", fontSize: "12px", cursor: "pointer" }}>
+                <div className="m-1 px-2 py-1 rounded-top rounded-bottom text-secondary new-task-btn" hidden={!stories.length} style={{ width: "fit-content", fontSize: "12px", cursor: "pointer" }}>
                   + New Task
                 </div>
               </>
@@ -60,6 +63,30 @@ export default function StoryStatus({ title, stories, labelColor }) {
               null
           }
         </div>
+      </div>
+    </div>
+  );
+}
+
+function AddNewStory() {
+  return (
+    <div className="d-flex justify-content-between px-3 py-2 bg-white">
+      <div>
+        <div style={{ display: "inline-block" }}>
+          <span style={{ color: "lightgrey" }}>
+            &#9643; &nbsp; Add New Story
+          </span>
+        </div>
+      </div>
+
+      <div className="d-flex justify-content-around" style={{ width: "16%" }}>
+        <span className="mx-1">
+          <AssigneeIcon />
+        </span>
+
+        <span className="mx-1">
+          <PriorityFlag color={"lightgrey"} />
+        </span>
       </div>
     </div>
   );

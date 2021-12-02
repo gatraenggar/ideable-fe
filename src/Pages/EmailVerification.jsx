@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import GetEmailVerification from '../API/HTTP/GetEmailVerification';
+import httpGetEmailVerification from '../API/HTTP/GetEmailVerification';
 
 export default function EmailVerification() {
   const [isHttpLoading, setIsHttpLoading] = useState(true);
@@ -13,7 +13,7 @@ export default function EmailVerification() {
   }, []);
 
   const verifyEmail = async () => {
-    const httpResponse = await GetEmailVerification(authToken);
+    const httpResponse = await httpGetEmailVerification(authToken);
     const responseJSON = await httpResponse.json();
     setIsHttpLoading(false);
 

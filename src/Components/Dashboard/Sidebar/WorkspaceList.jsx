@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AllWorkspacesIcon, DropdownArrowIcon, FolderIcon, ListIcon } from "../Utils";
-import { fakeWorkspaces as workspaces } from "../../../Constants/fakeWorkspaces";
+import { WorkspaceContext } from "../../../Pages/Dashboard";
 
 export default function SidebarWorkspaceSegment({ isDarkTab }) {
     return (
@@ -24,14 +24,16 @@ export default function SidebarWorkspaceSegment({ isDarkTab }) {
 }
 
 function WorkspaceList({ isDarkTab }) {
+    const { workspaces } = useContext(WorkspaceContext);
+
     return (
         <div className="fw-bold text-secondary" style={{ fontSize: "0.9em" }}>
             <AllWorkspacesIcon isDarkTab={isDarkTab} />
             {
-                workspaces.map(({ title, folders }, index) => {
+                workspaces.map(({ name }, index) => {
                     return (
                         <div key={index}>
-                            <Workspace isDarkTab={isDarkTab} workspaceTitle={title} folders={folders} />
+                            <Workspace isDarkTab={isDarkTab} workspaceTitle={name} workspaceIndex={index} />
                         </div>
                     );
                 })
@@ -40,7 +42,8 @@ function WorkspaceList({ isDarkTab }) {
     );
 }
 
-function Workspace({ isDarkTab, workspaceTitle, folders }) {
+function Workspace({ isDarkTab, workspaceTitle, workspaceIndex }) {
+    const { workspaces } = useContext(WorkspaceContext);
     const [showFolder, setShowFolder] = useState(false);
 
     return (
@@ -49,11 +52,11 @@ function Workspace({ isDarkTab, workspaceTitle, folders }) {
                 <DropdownArrowIcon isDarkTab={isDarkTab} workspaceTitle={workspaceTitle} />
             </div>
             {
-                showFolder ?
-                    folders.map(({ title, list }, index) => {
+                showFolder && workspaces[workspaceIndex].folders ?
+                    workspaces[workspaceIndex].folders.map(({ name }, index) => {
                         return (
                             <div key={index} >
-                                <Folder folderTitle={title} list={list} />
+                                <Folder folderTitle={name} workspaceIndex={workspaceIndex} folderIndex={index} />
                             </div>
                         );
                     })
@@ -64,7 +67,8 @@ function Workspace({ isDarkTab, workspaceTitle, folders }) {
     );
 }
 
-function Folder({ folderTitle, list }) {
+function Folder({ folderTitle, workspaceIndex, folderIndex }) {
+    const { workspaces } = useContext(WorkspaceContext);
     const [showList, setShowList] = useState(false);
 
     return (
@@ -76,8 +80,8 @@ function Folder({ folderTitle, list }) {
                 <FolderIcon folderTitle={folderTitle} />
             </div>
             {
-                showList ?
-                    list.map(({ title: listTitle }, index) => {
+                showList && workspaces[workspaceIndex].folders[folderIndex] ?
+                    workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, index) => {
                         return (
                             <div
                                 key={index}

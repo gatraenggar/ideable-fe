@@ -3,7 +3,7 @@ import { DropdownArrowIcon } from "./Utils";
 import StoryStatus from "./StoryStatus";
 
 export default function List({ title, stories }) {
-  const [isListOpen, setIsListOpen] = useState(true);
+  const [isListOpen, setIsListOpen] = useState(false);
 
   const [sortedStories, setSortedStories] = useState({
     todo: [],

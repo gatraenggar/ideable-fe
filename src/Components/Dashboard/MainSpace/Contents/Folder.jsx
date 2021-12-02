@@ -1,23 +1,33 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import List from "./List"
 
-export default function Folder({ workspaceTitle, workspaceFolders }) {
-  return workspaceFolders.map(({ title: folderTitle, list: folderList }, index) => {
-    return (
-      <div key={index}>
-        <div className="">
-          {workspaceTitle} &gt; {folderTitle}
-        </div>
+export default function Folder({ workspaceIndex, workspaceTitle }) {
+  const { workspaces } = useContext(WorkspaceContext);
 
-        {
-          folderList.map(({ title: listTitle, stories }, index) => {
-            return (
-              <div key={index} >
-                <List title={listTitle} stories={stories} />
-              </div>
-            );
-          })
-        }
-      </div>
-    );
-  });
+  if (workspaces[workspaceIndex].hasOwnProperty("folders") ) {
+    return workspaces[workspaceIndex].folders.map(({ name: folderTitle }, index) => {
+      return (
+        <div key={index}>
+          <div className="">
+            {workspaceTitle} &gt; {folderTitle}
+          </div>
+  
+          {
+            workspaces[workspaceIndex].folders[index].lists.map(({ name: listTitle }, index) => {
+              return (
+                <div key={index} >
+                  <List title={listTitle} stories={[]} />
+                </div>
+              );
+            })
+          }
+        </div>
+      );
+    });
+  }
+
+  return (
+    <div> Loading </div>
+  )
 }

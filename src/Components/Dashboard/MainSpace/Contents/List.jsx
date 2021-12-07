@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { DropdownArrowIcon } from "./Utils";
 import StoryStatus from "./StoryStatus";
@@ -16,11 +16,6 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
     inEvaluation: [],
     done: [],
   });
-
-  useEffect(() => {
-    // fetchStories()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const getStories = async (workspaceIDs, listIDs) => {
     const httpResponse = await httpGetStories(workspaceIDs, listIDs);
@@ -47,11 +42,6 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
         [workspaces[workspaceIndex].uuid],
         [workspaces[workspaceIndex].folders[folderIndex].lists[listIndex].uuid],
       );
-
-    console.log("new", workspaces[workspaceIndex]
-      .folders[folderIndex]
-      .lists[listIndex]
-    );
 
     workspaces[workspaceIndex]
       .folders[folderIndex]

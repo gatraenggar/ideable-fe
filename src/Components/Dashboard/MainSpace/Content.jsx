@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { WorkspaceContext } from "../../../Pages/Dashboard";
-import Folder from "./Contents/Folder";
+import Workspace from "./Contents/Workspace";
 
 export default function Content() {
   const { workspaces } = useContext(WorkspaceContext);
@@ -10,7 +10,7 @@ export default function Content() {
       {
         workspaces.map(({ name }, index) => {
           return (
-            <Folder key={index} workspaceIndex={index} workspaceTitle={name} />
+            <Workspace key={index} workspaceIndex={index} workspaceTitle={name} />
           );
         })
       }

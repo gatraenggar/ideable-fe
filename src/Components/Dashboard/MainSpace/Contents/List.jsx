@@ -47,8 +47,9 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
       .folders[folderIndex]
       .lists[listIndex]
       .stories
-      .map((story) => ({
+      .map((story, index) => ({
         ...story,
+        index: index,
         tasks: [],
       }))
       .forEach((story) => {
@@ -100,46 +101,80 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
       <div className={`${isListOpen ? "" : "d-none"} my-3`}>
         {
           sortedStories.done.length ?
-            <StoryStatus title={"DONE"} stories={sortedStories.done} labelColor={"bg-success"} />
+            <StoryStatus
+              title={"DONE"}
+              stories={sortedStories.done}
+              labelColor={"bg-success"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }
 
-
         {
           sortedStories.inEvaluation.length ?
-            <StoryStatus title={"IN EVALUATION"} stories={sortedStories.inEvaluation} labelColor={"bg-info"} />
+            <StoryStatus
+              title={"IN EVALUATION"}
+              stories={sortedStories.inEvaluation}
+              labelColor={"bg-info"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }
 
         {
           sortedStories.inReview.length ?
-            <StoryStatus title={"IN REVIEW"} stories={sortedStories.inReview} labelColor={"bg-primary"} />
+            <StoryStatus
+              title={"IN REVIEW"}
+              stories={sortedStories.inReview}
+              labelColor={"bg-primary"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }
 
         {
           sortedStories.inProgress.length ?
-            <StoryStatus title={"IN PROGRESS"} stories={sortedStories.inProgress} labelColor={"bg-warning"} />
+            <StoryStatus
+              title={"IN PROGRESS"}
+              stories={sortedStories.inProgress}
+              labelColor={"bg-warning"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }
 
         {
           sortedStories.todo.length ?
-            <StoryStatus title={"TODO"} stories={sortedStories.todo} labelColor={"bg-secondary"} />
+            <StoryStatus
+              title={"TODO"}
+              stories={sortedStories.todo}
+              labelColor={"bg-secondary"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }
-        
+
         {
           !sortedStories.done.length
-          && !sortedStories.inEvaluation.length
-          && !sortedStories.inReview.length
-          && !sortedStories.inProgress.length
-          && !sortedStories.todo.length ?
+            && !sortedStories.inEvaluation.length
+            && !sortedStories.inReview.length
+            && !sortedStories.inProgress.length
+            && !sortedStories.todo.length ?
             <StoryStatus title={"TODO"} stories={[]} labelColor={"bg-secondary"} />
             :
             null

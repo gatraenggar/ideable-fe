@@ -2,7 +2,14 @@ import { useState } from "react";
 import Story from "./Story";
 import { DropdownArrowIcon, AssigneeIcon, PriorityFlag } from "./Utils";
 
-export default function StoryStatus({ title, stories, labelColor }) {
+export default function StoryStatus({ 
+  title, 
+  stories, 
+  labelColor,
+  workspaceIndex,
+  folderIndex,
+  listIndex,
+}) {
   const [isStoriesOpen, setIsStoriesOpen] = useState(true);
 
   return (
@@ -49,7 +56,13 @@ export default function StoryStatus({ title, stories, labelColor }) {
                   stories.length ?
                     stories.map((story, index) => {
                       return (
-                        <Story key={index} story={story} />
+                        <Story 
+                          key={index}
+                          workspaceIndex={workspaceIndex}
+                          folderIndex={folderIndex}
+                          listIndex={listIndex}
+                          storyIndex={index}
+                        />
                       );
                     })
                     :

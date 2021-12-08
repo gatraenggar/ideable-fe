@@ -49,12 +49,15 @@ export default function Dashboard() {
     const fetchAllContents = async () => {
         try {
             const workspaces = await getWorkspaces();
+            if (!workspaces.length) return
+
             const workspaceIDs = workspaces.map(({ uuid }) => uuid)
-    
             const folders = await getFolders(workspaceIDs)
-            const folderIDs = folders.map(({ uuid }) => uuid)
-    
-            const lists = await getLists(workspaceIDs, folderIDs)
+            if (!folders.length) return
+
+            const lists = await getLists(workspaceIDs, folders.map(({ uuid }) => uuid))
+            if (!lists.length) return
+
             const mappedLists = lists.map((list) => ({
                 ...list,
                 stories: [],

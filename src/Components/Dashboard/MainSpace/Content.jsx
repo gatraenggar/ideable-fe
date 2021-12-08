@@ -8,11 +8,16 @@ export default function Content() {
   return (
     <div className="px-5 py-4 sidebar-workspace-scroller" style={{ height: "92vh", backgroundColor: "#eeeeee" }}>
       {
-        workspaces.map(({ name }, index) => {
-          return (
-            <Workspace key={index} workspaceIndex={index} workspaceTitle={name} />
-          );
-        })
+        workspaces.length ?
+          workspaces.map(({ name }, index) => {
+            return (
+              <Workspace key={index} workspaceIndex={index} workspaceTitle={name} />
+            );
+          })
+          :
+          <h4 className="d-flex justify-content-center align-items-end h-50 py-3 text-secondary">
+            Hmm... seems like you have no workspace yet
+          </h4>
       }
     </div>
   );

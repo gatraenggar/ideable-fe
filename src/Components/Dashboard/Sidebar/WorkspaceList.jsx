@@ -30,13 +30,16 @@ function WorkspaceList({ isDarkTab }) {
         <div className="fw-bold text-secondary" style={{ fontSize: "0.9em" }}>
             <AllWorkspacesIcon isDarkTab={isDarkTab} />
             {
-                workspaces.map(({ name }, index) => {
-                    return (
-                        <div key={index}>
-                            <Workspace isDarkTab={isDarkTab} workspaceTitle={name} workspaceIndex={index} />
-                        </div>
-                    );
-                })
+                workspaces.length ?
+                    workspaces.map(({ name }, index) => {
+                        return (
+                            <div key={index}>
+                                <Workspace isDarkTab={isDarkTab} workspaceTitle={name} workspaceIndex={index} />
+                            </div>
+                        );
+                    })
+                    :
+                    null
             }
         </div>
     );

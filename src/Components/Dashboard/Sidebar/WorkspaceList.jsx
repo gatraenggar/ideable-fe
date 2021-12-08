@@ -48,11 +48,15 @@ function WorkspaceList({ isDarkTab }) {
 function Workspace({ isDarkTab, workspaceTitle, workspaceIndex }) {
     const { workspaces } = useContext(WorkspaceContext);
     const [showFolder, setShowFolder] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div>
             <div onClick={() => setShowFolder(!showFolder)}>
-                <DropdownArrowIcon isDarkTab={isDarkTab} workspaceTitle={workspaceTitle} />
+                <div className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`} style={{ marginBottom: "6px" }} onClick={() => setIsOpen(!isOpen)}>
+                    <DropdownArrowIcon isDarkTab={isDarkTab} isOpen={isOpen} />
+                    <span className="mx-2"> {workspaceTitle} </span>
+                </div>
             </div>
             {
                 showFolder && workspaces[workspaceIndex].folders ?

@@ -2,7 +2,11 @@ import { useContext } from "react";
 import { WorkspaceContext } from "../../../Pages/Dashboard";
 import Workspace from "./Contents/Workspace";
 
-export default function Content() {
+export default function Content({
+  currentWorkspaceIdx,
+  currentFolderIdx,
+  currentListIdx,
+}) {
   const { workspaces } = useContext(WorkspaceContext);
 
   return (
@@ -11,7 +15,17 @@ export default function Content() {
         workspaces.length ?
           workspaces.map(({ name }, index) => {
             return (
-              <Workspace key={index} workspaceIndex={index} workspaceTitle={name} />
+              (currentWorkspaceIdx !== null && index === currentWorkspaceIdx)
+              || currentWorkspaceIdx === null ?
+                <Workspace
+                  key={index}
+                  workspaceIndex={index}
+                  workspaceTitle={name}
+                  currentFolderIdx={currentFolderIdx}
+                  currentListIdx={currentListIdx}
+                />
+                :
+                null
             );
           })
           :

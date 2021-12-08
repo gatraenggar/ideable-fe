@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { DropdownArrowIcon } from "./Utils";
 import StoryStatus from "./StoryStatus";
@@ -6,8 +6,7 @@ import httpGetStories from "../../../../API/HTTP/GetStories";
 
 export default function List({ title, workspaceIndex, folderIndex, listIndex }) {
   const { workspaces } = useContext(WorkspaceContext);
-  const [isListOpen, setIsListOpen] = useState(false);
-  const [isStoriesFetched, setIsStoriesFetched] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
 
   const [sortedStories, setSortedStories] = useState({
     todo: [],
@@ -83,17 +82,17 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
     });
   };
 
-  const showList = async () => {
-    if (!isStoriesFetched) {
-      await fetchStories();
-      setIsStoriesFetched(true);
-    }
-    setIsListOpen(!isListOpen);
-  };
+  useEffect(() => {
+    fetchStories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="mb-4">
-      <div className="d-flex align-items-center my-1 fw-bold" style={{ fontSize: "1.05em", cursor: "pointer" }} onClick={async () => await showList()}>
+      <div
+        className="d-flex align-items-center my-1 fw-bold" style={{ fontSize: "1.05em", cursor: "pointer" }}
+        onClick={async () => setIsListOpen(!isListOpen)}
+      >
         <DropdownArrowIcon isOpen={isListOpen} />
         <div className="mx-2"> {title} </div>
       </div>

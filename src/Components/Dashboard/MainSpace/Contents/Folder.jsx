@@ -7,6 +7,7 @@ export default function Folder({
   workspaceIndex,
   folderTitle,
   folderIndex,
+  currentListIdx,
 }) {
   const { workspaces } = useContext(WorkspaceContext);
 
@@ -19,14 +20,18 @@ export default function Folder({
       {
         workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, listIndex) => {
           return (
-            <div key={listIndex} >
-              <List
-                title={listTitle}
-                workspaceIndex={workspaceIndex}
-                folderIndex={folderIndex}
-                listIndex={listIndex}
-              />
-            </div>
+            (currentListIdx !== null && listIndex === currentListIdx)
+            || currentListIdx === null ?
+              <div key={listIndex} >
+                <List
+                  title={listTitle}
+                  workspaceIndex={workspaceIndex}
+                  folderIndex={folderIndex}
+                  listIndex={listIndex}
+                />
+              </div>
+              :
+              null
           );
         })
       }

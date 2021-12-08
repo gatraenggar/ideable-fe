@@ -10,12 +10,15 @@ export const WorkspaceContext = createContext([]);
 export default function Dashboard() {
     const [showTab, setShowTab] = useState(true);
     const [workspaces, setWorkspaces] = useState([])
+    const [currentWorkspaceIdx, setCurrentWorkspaceIdx] = useState(null)
+    const [currentFolderIdx, setCurrentFolderIdx] = useState(null)
+    const [currentListIdx, setCurrentListIdx] = useState(null)
 
     useEffect(() => {
         getWorkspaces()
         
         fetchAllContents()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const getWorkspaces = async () => {
@@ -82,8 +85,20 @@ export default function Dashboard() {
     return (
         <WorkspaceContext.Provider value={{ workspaces }}>
             <div className="d-flex" style={{ height: "100vh" }}>
-                <Sidebar showTab={showTab} setShowTab={(currentShowTab) => setShowTab(currentShowTab)} />
-                <MainSpace showTab={showTab} setShowTab={(currentShowTab) => setShowTab(currentShowTab)} />
+                <Sidebar 
+                    showTab={showTab}
+                    setShowTab={(currentShowTab) => setShowTab(currentShowTab)}
+                    setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
+                    setCurrentFolderIdx={setCurrentFolderIdx}
+                    setCurrentListIdx={setCurrentListIdx}
+                />
+                <MainSpace 
+                    showTab={showTab}
+                    setShowTab={(currentShowTab) => setShowTab(currentShowTab)}
+                    currentWorkspaceIdx={currentWorkspaceIdx}
+                    currentFolderIdx={currentFolderIdx}
+                    currentListIdx={currentListIdx}
+                />
             </div>
         </WorkspaceContext.Provider>
     );

@@ -23,7 +23,6 @@ import { httpURI } from "../../Constants/httpURI"
 
     localStorage.removeItem("user");
 
-    alert("Your session has ended, please re-login")
     window.location.href = "/login";
 }
 

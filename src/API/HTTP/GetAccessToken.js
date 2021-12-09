@@ -16,7 +16,10 @@ import httpPostLogout from "./PostLogout"
     .catch((error)=> error)
 
     const responseJSON = await response.json()
-    if (responseJSON.message === "Re-login required") await httpPostLogout();
+    if (responseJSON.message === "Re-login required") {
+        alert("Your session has ended, please re-login")
+        await httpPostLogout();
+    }
 }
 
 export default httpGetAccessToken

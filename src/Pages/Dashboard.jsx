@@ -15,68 +15,38 @@ export default function Dashboard() {
     const [currentListIdx, setCurrentListIdx] = useState(null)
 
     useEffect(() => {
-        getWorkspaces()
-        
         fetchAllContents()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const getWorkspaces = async () => {
-        const httpResponse = await httpGetWorkspaces();
-        const responseJSON = await httpResponse.json();
-    
-        if (responseJSON.status === "failed") throw new Error(responseJSON.message)
-
-        setWorkspaces(responseJSON.data)
-        return responseJSON.data
-    };
-
-    const getFolders = async (workspaceIDs) => {
-        const httpResponse = await httpGetFolders(workspaceIDs);
-        const responseJSON = await httpResponse.json();
-    
-        if (responseJSON.status === "failed") throw new Error(responseJSON.message)
-
-        return responseJSON.data
-    }
-
-    const getLists = async (workspaceIDs, folderIDs) => {
-        const httpResponse = await httpGetLists(workspaceIDs, folderIDs);
-        const responseJSON = await httpResponse.json();
-    
-        if (responseJSON.status === "failed") throw new Error(responseJSON.message)
-
-        return responseJSON.data
-    }
-
     const fetchAllContents = async () => {
         try {
-            const workspaces = await getWorkspaces();
-            if (!workspaces.length) return
+            const workspaces = await httpGetWorkspaces();
+            if (!Array.isArray(workspaces) || !workspaces.length) return
 
             const workspaceIDs = workspaces.map(({ uuid }) => uuid)
-            const folders = await getFolders(workspaceIDs)
-            if (!folders.length) return
+            const folders = await httpGetFolders(workspaceIDs);
+            if (!Array.isArray(folders) || !folders.length) return
 
-            const lists = await getLists(workspaceIDs, folders.map(({ uuid }) => uuid))
-            if (!lists.length) return
+            const lists = await httpGetLists(workspaceIDs, folders.map(({ uuid }) => uuid))
+            if (!Array.isArray(lists) || !lists.length) return
 
             const mappedLists = lists.map((list) => ({
                 ...list,
                 stories: [],
             }))
     
-            const folderMap = folders.map((folder) => ({
+            const mappedFolders = folders.map((folder) => ({
                 ...folder,
                 lists: mappedLists.filter(({ folder_uuid }) => folder.uuid === folder_uuid)
             }))
     
-            const workspaceMap = workspaces.map((workspace) => ({
+            const mappedWorkspaces = workspaces.map((workspace) => ({
                 ...workspace,
-                folders: folderMap.filter((folder) => workspace.uuid === folder.workspace_uuid),
+                folders: mappedFolders.filter((folder) => workspace.uuid === folder.workspace_uuid),
             }))
     
-            setWorkspaces(workspaceMap)
+            setWorkspaces(mappedWorkspaces)
         } catch (error) {
             alert(error.message)
         }

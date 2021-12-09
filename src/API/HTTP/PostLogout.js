@@ -14,7 +14,17 @@ import { httpURI } from "../../Constants/httpURI"
     .then((res)=> res)
     .catch((error)=> error)
 
-    return response
+    const responseJSON = await response.json();
+
+    if (responseJSON.status === "failed") {
+        alert(responseJSON.message);
+        return;
+    }
+
+    localStorage.removeItem("user");
+
+    alert("Your session has ended, please re-login")
+    window.location.href = "/login";
 }
 
 export default httpPostLogout

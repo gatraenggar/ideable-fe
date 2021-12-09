@@ -15,21 +15,12 @@ export default function StorySection({
   const [isTaskFetched, setIsTaskFetched] = useState(false);
   const { workspaces } = useContext(WorkspaceContext);
 
-  const getTasks = async (workspaceIDs, storyIDs) => {
-    const httpResponse = await httpGetTasks(workspaceIDs, storyIDs);
-    const responseJSON = await httpResponse.json();
-
-    if (responseJSON.status === "failed") throw new Error(responseJSON.message);
-
-    return responseJSON.data;
-  };
-
   const fetchTasks = async () => {
     workspaces[workspaceIndex]
       .folders[folderIndex]
       .lists[listIndex]
       .stories[storyIndex]
-      .tasks = await getTasks(
+      .tasks = await httpGetTasks(
         [workspaces[workspaceIndex].uuid],
         [workspaces[workspaceIndex]
           .folders[folderIndex]

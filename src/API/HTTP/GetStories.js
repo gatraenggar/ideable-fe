@@ -1,4 +1,5 @@
 import { httpURI } from "../../Constants/httpURI";
+import httpGetAccessToken from "./GetAccessToken"
 /**
  * @param form Javascript object
  * @returns JSON
@@ -16,7 +17,19 @@ const httpGetStories = async (workspaceIDs, listIDs) => {
         .then((res) => res)
         .catch((error) => error);
 
-    return response;
+    const responseJSON = await response.json();
+
+    if (responseJSON.message === "Token has expired") {
+        await httpGetAccessToken()
+        return httpGetStories()
+    }
+
+    if (responseJSON.status === "failed") {
+        alert(responseJSON.message)
+        return []
+    }
+
+    return responseJSON.data
 };
 
 export default httpGetStories;

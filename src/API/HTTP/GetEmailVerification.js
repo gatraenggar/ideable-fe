@@ -9,7 +9,6 @@ import { httpURI } from "../../Constants/httpURI"
         headers: {
             'Content-Type' : 'application/json',
         },
-        credentials: 'include',
     })
     .then((res)=> res)
     .catch((error)=> error)

@@ -16,15 +16,6 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
     done: [],
   });
 
-  const getStories = async (workspaceIDs, listIDs) => {
-    const httpResponse = await httpGetStories(workspaceIDs, listIDs);
-    const responseJSON = await httpResponse.json();
-
-    if (responseJSON.status === "failed") throw new Error(responseJSON.message);
-
-    return responseJSON.data;
-  };
-
   const fetchStories = async () => {
     const storiesMap = {
       todo: [],
@@ -37,7 +28,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
     workspaces[workspaceIndex]
       .folders[folderIndex]
       .lists[listIndex]
-      .stories = await getStories(
+      .stories = await httpGetStories(
         [workspaces[workspaceIndex].uuid],
         [workspaces[workspaceIndex].folders[folderIndex].lists[listIndex].uuid],
       );

@@ -12,7 +12,7 @@ const httpPostGoogleOAuth = async (form) => {
         body: JSON.stringify(form),
         credentials: 'include',
     })
-        .then((res) => res)
+        .then(async (res) => await res.json())
         .catch((error) => error);
 
     return response;
@@ -62,15 +62,14 @@ export const attachGoogleSign = (googleSignButton) => {
                         };
 
                         const httpResponse = await httpPostGoogleOAuth(payload);
-                        const responseJSON = await httpResponse.json()
 
-                        if (responseJSON.status !== "success") {
-                            alert(responseJSON.message);
+                        if (httpResponse.status !== "success") {
+                            alert(httpResponse.message);
                             return;
                         }
 
-                        localStorage.setItem("user", JSON.stringify(responseJSON.data));
-                        if (httpResponse.status === 201) alert("We've send you a verification email")
+                        localStorage.setItem("user", JSON.stringify(httpResponse.data));
+                        if (httpResponse.status === "success") alert("We've send you a verification email")
 
                         window.location.href = "/dashboard";
 

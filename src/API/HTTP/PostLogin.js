@@ -12,7 +12,7 @@ import { httpURI } from "../../Constants/httpURI"
         body: JSON.stringify(form),
         credentials: 'include',
     })
-    .then((res)=> res)
+    .then(async (res) => await res.json())
     .catch((error)=> error)
 
     return response

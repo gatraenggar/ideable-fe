@@ -23,18 +23,15 @@ export default function LoginForm () {
         if (Validator.isEmail(form.email)) {
             setIsHttpLoading(true)
             const httpResponse = await httpPostLogin(form)
-            const responseJSON = await httpResponse.json()
             setIsHttpLoading(false)
 
-            if (responseJSON.status === "failed") { 
-                setHttpError(responseJSON.message)
-                return
+            if (httpResponse.status === "success") { 
+                setHttpError("")
+                localStorage.setItem("user", JSON.stringify(httpResponse.data));
+                window.location.replace("/dashboard")
+            } else {
+                setHttpError(httpResponse.message)
             }
-            else { setHttpError("") }
-
-            localStorage.setItem("user", JSON.stringify(responseJSON.data));
-
-            window.location.replace("/dashboard")
         }
     }
 

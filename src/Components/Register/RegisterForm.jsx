@@ -42,19 +42,12 @@ export default function RegisterForm() {
                 "last_name": form.lastName,
                 "password": form.password,
             });
-            const responseJSON = await httpResponse.json()
             setIsHttpLoading(false);
 
-            if (responseJSON.status === "failed") { 
-                setHttpError(responseJSON.message);
+            if (httpResponse.status === "failed") { 
+                setHttpError(httpResponse.message);
                 return;
             }
-            else { setHttpError(""); }
-
-            localStorage.setItem("user", JSON.stringify(responseJSON.data));
-            if (httpResponse.status === 201) alert("We've send you a verification email")
-
-            window.location.href = "/dashboard"
         }
     };
 

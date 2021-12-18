@@ -12,10 +12,17 @@ const httpPostRegister = async (form) => {
         body: JSON.stringify(form),
         credentials: 'include',
     })
-        .then((res) => res)
+        .then(async (res) => await res.json())
         .catch((error) => error);
 
-    return response;
+    if (response.status !== "success") { 
+        return response
+    }
+
+    localStorage.setItem("user", JSON.stringify(response.data));
+    if (response.status === "success") alert("We've send you a verification email")
+
+    window.location.href = "/dashboard"
 };
 
 export default httpPostRegister;

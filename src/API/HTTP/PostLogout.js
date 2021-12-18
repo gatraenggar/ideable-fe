@@ -11,13 +11,11 @@ import { httpURI } from "../../Constants/httpURI"
         },
         credentials: 'include',
     })
-    .then((res)=> res)
+    .then(async (res) => await res.json())
     .catch((error)=> error)
 
-    const responseJSON = await response.json();
-
-    if (responseJSON.status === "failed") {
-        alert(responseJSON.message);
+    if (response.status === "failed") {
+        alert(response.message);
         return;
     }
 

@@ -9,18 +9,8 @@ export default function Navbar({ showTab, setShowTab }) {
     e.preventDefault();
 
     setIsHttpLoading(true);
-    const httpResponse = await httpPostLogout();
-    const responseJSON = await httpResponse.json();
+    await httpPostLogout();
     setIsHttpLoading(false);
-
-    if (responseJSON.status === "failed") {
-      alert(responseJSON.message);
-      return;
-    }
-
-    localStorage.removeItem("user");
-
-    window.location.href = "/";
   };
 
   return (

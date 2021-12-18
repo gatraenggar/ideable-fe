@@ -25,11 +25,7 @@ export default function LoginForm () {
             const httpResponse = await httpPostLogin(form)
             setIsHttpLoading(false)
 
-            if (httpResponse.status === "success") { 
-                setHttpError("")
-                localStorage.setItem("user", JSON.stringify(httpResponse.data));
-                window.location.replace("/dashboard")
-            } else {
+            if (httpResponse.status !== "success") { 
                 setHttpError(httpResponse.message)
             }
         }

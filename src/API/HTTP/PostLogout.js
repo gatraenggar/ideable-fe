@@ -14,14 +14,14 @@ import { httpURI } from "../../Constants/httpURI"
     .then(async (res) => await res.json())
     .catch((error)=> error)
 
-    if (response.status === "failed") {
+    if (response.status === "success") {
+        localStorage.removeItem("user");
+
+        window.location.href = "/login";
+    } else {
         alert(response.message);
         return;
     }
-
-    localStorage.removeItem("user");
-
-    window.location.href = "/login";
 }
 
 export default httpPostLogout

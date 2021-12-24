@@ -3,17 +3,16 @@ import { httpURI } from "../../Constants/httpURI"
  * @param form Javascript object
  * @returns JSON
  */
- const httpGetEmailVerification = async (authToken) => {
-    const response = await fetch(`${httpURI}/v1/auth/email-verification/${authToken}`, {
+ const httpGetUserStatus = async () => {
+    return await fetch(`${httpURI}/v1/auth/user-status`, {
         method: 'GET',
         headers: {
             'Content-Type' : 'application/json',
         },
+        credentials: 'include'
     })
     .then(async (res) => await res.json())
     .catch((error)=> error)
-
-    return response
 }
 
-export default httpGetEmailVerification
+export default httpGetUserStatus

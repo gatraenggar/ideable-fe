@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import httpGetEmailVerification from '../API/HTTP/GetEmailVerification';
+import httpGetUserStatus from '../API/HTTP/GetUserStatus';
 
 export default function EmailVerification() {
+  let { authToken } = useParams();
   const [isHttpLoading, setIsHttpLoading] = useState(true);
   const [httpError, setHttpError] = useState("");
-  let { authToken } = useParams();
+  const [redirectPath, setRedirectPath] = useState("/login")
 
   useEffect(() => {
     verifyEmail()
@@ -13,17 +15,18 @@ export default function EmailVerification() {
   }, []);
 
   const verifyEmail = async () => {
-    const httpResponse = await httpGetEmailVerification(authToken);
-    const responseJSON = await httpResponse.json();
+    const getEmailVerifResponse = await httpGetEmailVerification(authToken);
     setIsHttpLoading(false);
 
-    if (responseJSON.status === "failed") {
-      setHttpError(responseJSON.message);
+    if (getEmailVerifResponse.status === "failed") {
+      setHttpError(getEmailVerifResponse.message);
       return;
     }
-    else { setHttpError(""); }
 
-    localStorage.setItem("user", JSON.stringify(responseJSON.data));
+    setHttpError("")
+
+    const getUserStatusResponse = await httpGetUserStatus()
+    if (getUserStatusResponse.status === "success") setRedirectPath("/dashboard")
   };
 
   return (
@@ -33,7 +36,7 @@ export default function EmailVerification() {
           <VerificationLoading />
           :
           httpError === "" ?
-            <VerificationSuccess />
+            <VerificationSuccess redirectPath={redirectPath} />
             :
             <VerificationFail httpError={httpError} />
       }
@@ -60,7 +63,7 @@ const VerificationLoading = () => {
   );
 };
 
-const VerificationSuccess = () => {
+const VerificationSuccess = ({ redirectPath }) => {
   return (
     <div>
       <h3 className="my-4 text-center">
@@ -72,8 +75,13 @@ const VerificationSuccess = () => {
           Now you can close this tab safely or&nbsp;
         </span>
 
-        <span className="text-decoration-underline text-clickable" onClick={() => window.location.href = "/dashboard" }>
-          continue to your dashboard
+        <span className="text-decoration-underline text-clickable" onClick={() => window.location.href = redirectPath }>
+          {
+            redirectPath === "/dashboard" ?
+              "continue to your dashboard"
+              :
+              "login to continue your works"
+          }
         </span>
       </div>
     </div>

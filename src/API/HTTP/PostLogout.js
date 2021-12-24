@@ -14,7 +14,7 @@ import { httpURI } from "../../Constants/httpURI"
     .then(async (res) => await res.json())
     .catch((error)=> error)
 
-    if (response.status === "success") {
+    if (response.status === "success" || response.message === "Token not found") {
         localStorage.removeItem("user");
 
         window.location.href = "/login";

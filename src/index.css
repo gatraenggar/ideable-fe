@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+/* DISPLAY */
+.display-on-hover {
+  display: none;
+}
+
+.hover-trigger:hover > .display-on-hover {
+  display: block;
+}
+
 /* TEXT | FONT */
 .text-clickable {
   cursor: pointer;

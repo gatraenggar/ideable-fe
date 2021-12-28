@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AllWorkspacesIcon, DropdownArrowIcon, FolderIcon, ListIcon } from "../Utils";
 import { WorkspaceContext } from "../../../Pages/Dashboard";
 import WorkspaceForm from "./WorkspaceForm";
+import DeleteWorkspace from "./../../../API/HTTP/DeleteWorkspace"
 
 export default function WorkspaceSection({
     isDarkTab,
@@ -20,7 +21,7 @@ export default function WorkspaceSection({
             <div className="my-3">
                 <button
                     type="button"
-                    onClick={ async () => setIsWorkspaceFormOpen(!isWorkspaceFormOpen) }
+                    onClick={async () => setIsWorkspaceFormOpen(!isWorkspaceFormOpen)}
                     className={`w-100 py-1 fw-bold ${isDarkTab ? "dark-workspace-button" : "light-workspace-button"}`} >
                     <span> + </span>
                     <span style={{ fontSize: "0.92em" }}>
@@ -76,7 +77,7 @@ function WorkspaceFormLayer({ isWorkspaceFormOpen, setIsWorkspaceFormOpen }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 function WorkspaceList({
@@ -131,8 +132,20 @@ function Workspace({
     const { workspaces } = useContext(WorkspaceContext);
     const [showFolder, setShowFolder] = useState(false);
 
+    const deleteWorkspace = async (workspaceID, fetchContents) => {
+        if (!window.confirm("Are you sure to delete this workspace?")) return
+
+        const httpResponse = await DeleteWorkspace(workspaceID)
+        alert(httpResponse.message);
+
+        if (httpResponse.status !== "success") return
+    
+        await fetchContents()
+        setCurrentWorkspaceIdx(null)
+    }
+
     return (
-        <div>
+        <>
             <div
                 onClick={() => {
                     setShowFolder(!showFolder);
@@ -142,13 +155,27 @@ function Workspace({
                 }
                 }>
                 <div
-                    className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
+                    className={`d-flex justify-content-between align-items-center p-1 hover-trigger ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
                     style={{ marginBottom: "6px" }}
                 >
-                    <DropdownArrowIcon isDarkTab={isDarkTab} isOpen={showFolder} />
-                    <span className="mx-2">
-                        {workspaceTitle}
-                    </span>
+                    <div className="text-clickable">
+                        <DropdownArrowIcon isDarkTab={isDarkTab} isOpen={showFolder} />
+                        <span className="mx-2" title={workspaceTitle.length > 25 ? workspaceTitle : null}>
+                            {workspaceTitle.length > 25 ? workspaceTitle.slice(0, 26) + "..." : workspaceTitle}
+                        </span>
+                    </div>
+
+                    <WorkspaceContext.Consumer>
+                        {({fetchContents}) => (
+                            <div
+                                className="mx-1 display-on-hover"
+                                onClick={() => deleteWorkspace(workspaces[workspaceIndex].uuid, fetchContents)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                x
+                            </div>
+                        )}
+                    </WorkspaceContext.Consumer>
                 </div>
             </div>
             {
@@ -170,7 +197,7 @@ function Workspace({
                     :
                     null
             }
-        </div>
+        </>
     );
 }
 

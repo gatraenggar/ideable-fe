@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AllWorkspacesIcon, DropdownArrowIcon, FolderIcon, ListIcon } from "../Utils";
 import { WorkspaceContext } from "../../../Pages/Dashboard";
+import WorkspaceForm from "./WorkspaceForm";
 
 export default function WorkspaceSection({
     isDarkTab,
@@ -8,6 +9,8 @@ export default function WorkspaceSection({
     setCurrentFolderIdx,
     setCurrentListIdx,
 }) {
+    const [isWorkspaceFormOpen, setIsWorkspaceFormOpen] = useState(false);
+
     return (
         <>
             <div className={`d-flex mt-2 px-1 py-1 fw-bold text-secondary border-bottom ${isDarkTab ? "border-secondary" : ""}`} >
@@ -15,10 +18,17 @@ export default function WorkspaceSection({
             </div>
 
             <div className="my-3">
-                <button type="button" className={`w-100 py-1 fw-bold ${isDarkTab ? "dark-workspace-button" : "light-workspace-button"}`} >
+                <button
+                    type="button"
+                    onClick={ async () => setIsWorkspaceFormOpen(!isWorkspaceFormOpen) }
+                    className={`w-100 py-1 fw-bold ${isDarkTab ? "dark-workspace-button" : "light-workspace-button"}`} >
                     <span> + </span>
-                    <span style={{ fontSize: "0.92em" }}> Create Workspace </span>
+                    <span style={{ fontSize: "0.92em" }}>
+                        Create Workspace
+                    </span>
                 </button>
+
+                <WorkspaceFormLayer isWorkspaceFormOpen={isWorkspaceFormOpen} setIsWorkspaceFormOpen={setIsWorkspaceFormOpen} />
             </div>
 
             <div className="fw-bold text-secondary" style={{ fontSize: "0.9em" }}>
@@ -33,6 +43,42 @@ export default function WorkspaceSection({
     );
 }
 
+function WorkspaceFormLayer({ isWorkspaceFormOpen, setIsWorkspaceFormOpen }) {
+    return (
+        <>
+            <div
+                hidden={!isWorkspaceFormOpen}
+                onClick={() => setIsWorkspaceFormOpen(!isWorkspaceFormOpen)}
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "100vw",
+                    height: "100vh",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    zIndex: 1,
+                }}>
+            </div>
+
+            <div
+                className={`${isWorkspaceFormOpen ? "d-flex" : "d-none"} justify-content-center align-items-center rounded bg-white`}
+                style={{
+                    position: "absolute",
+                    top: "25%",
+                    left: "30%",
+                    width: "40vw",
+                    height: "50%",
+                    zIndex: 1,
+                }}
+            >
+                <div style={{ width: "80%" }}>
+                    <WorkspaceForm isWorkspaceFormOpen={isWorkspaceFormOpen} setIsWorkspaceFormOpen={setIsWorkspaceFormOpen} />
+                </div>
+            </div>
+        </>
+    )
+}
+
 function WorkspaceList({
     isDarkTab,
     setCurrentWorkspaceIdx,
@@ -45,18 +91,18 @@ function WorkspaceList({
         <div className="fw-bold text-secondary" style={{ fontSize: "0.9em" }}>
             <div
                 onClick={() => {
-                    setCurrentWorkspaceIdx(null)
-                    setCurrentFolderIdx(null)
-                    setCurrentListIdx(null)
+                    setCurrentWorkspaceIdx(null);
+                    setCurrentFolderIdx(null);
+                    setCurrentListIdx(null);
                 }
-            }>
+                }>
                 <AllWorkspacesIcon isDarkTab={isDarkTab} />
             </div>
             {
                 workspaces.length ?
                     workspaces.map(({ name }, index) => {
                         return (
-                            <Workspace 
+                            <Workspace
                                 key={index}
                                 isDarkTab={isDarkTab}
                                 workspaceTitle={name}
@@ -89,12 +135,12 @@ function Workspace({
         <div>
             <div
                 onClick={() => {
-                    setShowFolder(!showFolder)
-                    setCurrentWorkspaceIdx(workspaceIndex)
-                    setCurrentFolderIdx(null)
-                    setCurrentListIdx(null)
+                    setShowFolder(!showFolder);
+                    setCurrentWorkspaceIdx(workspaceIndex);
+                    setCurrentFolderIdx(null);
+                    setCurrentListIdx(null);
                 }
-            }>
+                }>
                 <div
                     className={`d-flex justify-content-start align-items-center p-1 text-clickable ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
                     style={{ marginBottom: "6px" }}
@@ -110,7 +156,7 @@ function Workspace({
                     workspaces[workspaceIndex].folders.map(({ name }, index) => {
                         return (
                             <div key={index} >
-                                <Folder 
+                                <Folder
                                     folderTitle={name}
                                     workspaceIndex={workspaceIndex}
                                     folderIndex={index}

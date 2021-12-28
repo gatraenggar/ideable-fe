@@ -4,7 +4,7 @@ import { AssigneeIcon, DropdownArrowIcon, PriorityFlag, ItemBranchIcon } from ".
 import httpGetTasks from "../../../../API/HTTP/GetTasks";
 import Task from "./Task";
 
-export default function StorySection({
+export default function Story({
   workspaceIndex,
   folderIndex,
   listIndex,
@@ -39,7 +39,7 @@ export default function StorySection({
 
   return (
     <>
-      <Story
+      <StoryRow
         story={
           workspaces[workspaceIndex]
             .folders[folderIndex]
@@ -80,7 +80,7 @@ export default function StorySection({
   );
 }
 
-function Story({
+function StoryRow({
   story,
   isTaskOpen,
   isTaskFetched,
@@ -91,6 +91,8 @@ function Story({
     2: 'yellow',
     3: 'red',
   };
+
+  if (!story) return null
 
   return (
     <div className="d-flex justify-content-between px-3 py-2 bg-white">

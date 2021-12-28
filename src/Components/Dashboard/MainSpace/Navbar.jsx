@@ -14,7 +14,7 @@ export default function Navbar({ showTab, setShowTab }) {
   };
 
   return (
-    <div className="d-flex justify-content-between align-items-center sticky-top px-2 py-3 bg-light" style={{ height: "8vh" }}>
+    <div className="d-flex justify-content-between align-items-center px-2 py-3 bg-light" style={{ height: "8vh" }}>
       <LoadingLayer isHttpLoading={isHttpLoading} />
 
       <div className="d-flex justify-content-between align-items-center">

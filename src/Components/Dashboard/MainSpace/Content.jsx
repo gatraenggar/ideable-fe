@@ -21,6 +21,7 @@ export default function Content({
                   key={index}
                   workspaceIndex={index}
                   workspaceTitle={name}
+                  currentWorkspaceIdx={currentWorkspaceIdx}
                   currentFolderIdx={currentFolderIdx}
                   currentListIdx={currentListIdx}
                 />

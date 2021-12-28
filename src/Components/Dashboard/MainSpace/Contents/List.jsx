@@ -76,7 +76,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
   useEffect(() => {
     fetchStories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [workspaces])
 
   return (
     <div className="mb-4">

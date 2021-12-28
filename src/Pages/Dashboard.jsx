@@ -15,21 +15,22 @@ export default function Dashboard() {
     const [currentListIdx, setCurrentListIdx] = useState(null)
 
     useEffect(() => {
-        fetchAllContents()
+        fetchContents()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const fetchAllContents = async () => {
+    const fetchContents = async () => {
         try {
-            const workspaces = await httpGetWorkspaces();
-            if (!Array.isArray(workspaces) || !workspaces.length) return
+            let workspaces = []
+            let folders = []
+            let lists = []
 
+            workspaces = await httpGetWorkspaces();
             const workspaceIDs = workspaces.map(({ uuid }) => uuid)
-            const folders = await httpGetFolders(workspaceIDs);
-            if (!Array.isArray(folders) || !folders.length) return
 
-            const lists = await httpGetLists(workspaceIDs, folders.map(({ uuid }) => uuid))
-            if (!Array.isArray(lists) || !lists.length) return
+            if (workspaces.length) folders = await httpGetFolders(workspaceIDs);
+
+            if (folders.length) lists = await httpGetLists(workspaceIDs, folders.map(({ uuid }) => uuid))
 
             const mappedLists = lists.map((list) => ({
                 ...list,
@@ -53,7 +54,7 @@ export default function Dashboard() {
     }
 
     return (
-        <WorkspaceContext.Provider value={{ workspaces }}>
+        <WorkspaceContext.Provider value={{ workspaces, fetchContents }}>
             <div className="d-flex" style={{ height: "100vh" }}>
                 <Sidebar 
                     showTab={showTab}

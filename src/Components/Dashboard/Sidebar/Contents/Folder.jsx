@@ -47,7 +47,10 @@ export default function Folder({
 
     return (
         <div
-            className="d-flex justify-content-between align-items-center p-1 hover-trigger"
+            className={`d-flex justify-content-between align-items-center p-1 hover-trigger ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
+            style={{
+                marginBottom: "6px",
+            }}
             onClick={() => {
                 setShowList(!showList)
                 setCurrentWorkspaceIdx(workspaceIndex);
@@ -55,7 +58,7 @@ export default function Folder({
                 setCurrentListIdx(null);
             }}
         >
-            <div style={{ marginLeft: "30px", marginBottom: "6px", fontSize: "0.9em" }}>
+            <div style={{ marginLeft: "30px", marginTop: "2px", fontSize: "0.9em" }}>
                 <div
                     className="d-flex justify-content-start align-items-center text-clickable"
                     onClick={() => setIsOptionOpen(false)}

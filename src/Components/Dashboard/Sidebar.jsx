@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Header from "./Sidebar/Header";
 import Search from "./Sidebar/Search";
-import WorkspaceSection from "./Sidebar/WorkspaceSection";
+import ContentList from "./Sidebar/ContentList";
 import ThemeToggler from "./Sidebar/ThemeToggler";
 
 export default function Sidebar({
     showTab,
     setShowTab,
+    currentWorkspaceIdx,
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
     setCurrentListIdx,
@@ -14,7 +15,13 @@ export default function Sidebar({
     const [isDarkTab, setIsDarkTab] = useState(false);
 
     return (
-        <div className={`${showTab ? "col-2" : "d-none"} px-2 sidebar-workspace-scroller`} style={{ height: "95vh", backgroundColor: isDarkTab ? "#20262b" : "#fff" }}>
+        <div 
+            className={`${showTab ? "col-2" : "d-none"} px-2 sidebar-workspace-scroller`}
+            style={{
+                height: "95vh",
+                backgroundColor: isDarkTab ? "#20262b" : "#fff",
+            }}
+        >
             <Header
                 isDarkTab={isDarkTab}
                 showTab={showTab}
@@ -23,8 +30,9 @@ export default function Sidebar({
 
             <Search isDarkTab={isDarkTab} />
 
-            <WorkspaceSection
+            <ContentList
                 isDarkTab={isDarkTab}
+                currentWorkspaceIdx={currentWorkspaceIdx}
                 setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                 setCurrentFolderIdx={setCurrentFolderIdx}
                 setCurrentListIdx={setCurrentListIdx}

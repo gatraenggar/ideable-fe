@@ -59,6 +59,7 @@ export default function Dashboard() {
                 <Sidebar 
                     showTab={showTab}
                     setShowTab={(currentShowTab) => setShowTab(currentShowTab)}
+                    currentWorkspaceIdx={currentWorkspaceIdx}
                     setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                     setCurrentFolderIdx={setCurrentFolderIdx}
                     setCurrentListIdx={setCurrentListIdx}

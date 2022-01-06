@@ -62,7 +62,6 @@ const LoadingLayer = ({ isHttpLoading }) => {
       left: 0,
       width: "100vw",
       height: "100vh",
-      zIndex: 1,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: "grey",

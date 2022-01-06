@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { WorkspaceContext } from "../../../Pages/Dashboard";
-import httpPostWorkspace from "../../../API/HTTP/PostWorkspace";
+import { WorkspaceContext } from "../../../../Pages/Dashboard";
+import httpPostWorkspace from "../../../../API/HTTP/PostWorkspace";
 
 export default function WorkspaceForm({
   isWorkspaceFormOpen,
@@ -44,7 +44,7 @@ export default function WorkspaceForm({
 
             <button
               type="submit"
-              onClick={async (e) => createWorkspace(e, fetchContents)}
+              onClick={(e) => createWorkspace(e, fetchContents)}
               className="btn btn-primary w-100 mt-4"
             >
               Create

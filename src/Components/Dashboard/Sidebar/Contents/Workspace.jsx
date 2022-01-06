@@ -3,13 +3,16 @@ import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { DropdownArrowIcon } from "../../Utils";
 import Folder from "./Folder";
 import FolderFormLayer from "../../Components/FolderFormLayer";
-import DeleteWorkspace from "../../../../API/HTTP/DeleteWorkspace";
+import httpDeleteWorkspace from "../../../../API/HTTP/DeleteWorkspace";
 
 export default function Workspace({
     isDarkTab,
     workspaceTitle,
     workspaceIndex,
+
     currentWorkspaceIdx,
+    currentFolderIdx,
+
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
     setCurrentListIdx,
@@ -20,13 +23,13 @@ export default function Workspace({
     const [isOptionOpen, setIsOptionOpen] = useState(false);
 
     useEffect(() => {
-        if (!(currentWorkspaceIdx === workspaceIndex)) setIsOptionOpen(false);
+        if (currentWorkspaceIdx !== workspaceIndex) setIsOptionOpen(false);
     }, [currentWorkspaceIdx, workspaceIndex]);
 
     const deleteWorkspace = async (workspaceID, fetchContents) => {
         if (!window.confirm("Are you sure to delete this workspace?")) return;
 
-        const httpResponse = await DeleteWorkspace(workspaceID);
+        const httpResponse = await httpDeleteWorkspace(workspaceID);
         alert(httpResponse.message);
 
         if (httpResponse.status !== "success") return;
@@ -98,9 +101,14 @@ export default function Workspace({
                         return (
                             <div key={index} >
                                 <Folder
+                                    isDarkTab={isDarkTab}
                                     folderTitle={name}
                                     workspaceIndex={workspaceIndex}
                                     folderIndex={index}
+
+                                    currentWorkspaceIdx={currentWorkspaceIdx}
+                                    currentFolderIdx={currentFolderIdx}
+
                                     setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                                     setCurrentFolderIdx={setCurrentFolderIdx}
                                     setCurrentListIdx={setCurrentListIdx}

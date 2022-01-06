@@ -60,6 +60,7 @@ export default function Dashboard() {
                     showTab={showTab}
                     setShowTab={(currentShowTab) => setShowTab(currentShowTab)}
                     currentWorkspaceIdx={currentWorkspaceIdx}
+                    currentFolderIdx={currentFolderIdx}
                     setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                     setCurrentFolderIdx={setCurrentFolderIdx}
                     setCurrentListIdx={setCurrentListIdx}

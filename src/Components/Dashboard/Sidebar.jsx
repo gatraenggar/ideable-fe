@@ -8,6 +8,7 @@ export default function Sidebar({
     showTab,
     setShowTab,
     currentWorkspaceIdx,
+    currentFolderIdx,
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
     setCurrentListIdx,
@@ -33,6 +34,7 @@ export default function Sidebar({
             <ContentList
                 isDarkTab={isDarkTab}
                 currentWorkspaceIdx={currentWorkspaceIdx}
+                currentFolderIdx={currentFolderIdx}
                 setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                 setCurrentFolderIdx={setCurrentFolderIdx}
                 setCurrentListIdx={setCurrentListIdx}

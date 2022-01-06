@@ -7,6 +7,7 @@ import WorkspaceFormLayer from "./Contents/WorkspaceFormLayer";
 export default function ContentList({
     isDarkTab,
     currentWorkspaceIdx,
+    currentFolderIdx,
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
     setCurrentListIdx,
@@ -54,7 +55,10 @@ export default function ContentList({
                                         isDarkTab={isDarkTab}
                                         workspaceTitle={name}
                                         workspaceIndex={index}
+
                                         currentWorkspaceIdx={currentWorkspaceIdx}
+                                        currentFolderIdx={currentFolderIdx}
+
                                         setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                                         setCurrentFolderIdx={setCurrentFolderIdx}
                                         setCurrentListIdx={setCurrentListIdx}

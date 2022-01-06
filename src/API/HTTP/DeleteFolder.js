@@ -3,8 +3,8 @@ import { httpURI } from "../../Constants/httpURI";
  * @param form Javascript object
  * @returns JSON
  */
-const httpDeleteWorkspace = async (workspaceID) => {
-    const response = await fetch(`${httpURI}/v1/workspaces/${workspaceID}`, {
+const httpDeleteFolder = async (workspaceID, folderID) => {
+    const response = await fetch(`${httpURI}/v1/workspaces/${workspaceID}/folders/${folderID}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -17,4 +17,4 @@ const httpDeleteWorkspace = async (workspaceID) => {
     return response
 };
 
-export default httpDeleteWorkspace;
+export default httpDeleteFolder;

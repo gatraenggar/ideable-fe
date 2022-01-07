@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
-import { FolderIcon, ListIcon } from "../../Utils";
+import { FolderIcon } from "../../Utils";
 import httpDeleteFolder from "../../../../API/HTTP/DeleteFolder";
 import ListFormLayer from "../../Components/ListFormLayer";
+import List from "./List";
 
 export default function Folder({
     isDarkTab,
@@ -12,6 +13,7 @@ export default function Folder({
 
     currentWorkspaceIdx,
     currentFolderIdx,
+    currentListIdx,
 
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
@@ -35,7 +37,7 @@ export default function Folder({
     ]);
 
     const deleteFolder = async (workspaceID, folderID, fetchContents) => {
-        if (!window.confirm("Are you sure to delete this workspace?")) return;
+        if (!window.confirm("Are you sure to delete this folder?")) return;
 
         const httpResponse = await httpDeleteFolder(workspaceID, folderID);
         alert(httpResponse.message);
@@ -107,21 +109,23 @@ export default function Folder({
 
             {
                 showList && workspaces[workspaceIndex].folders[folderIndex] ?
-                    workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, titleIndex) => {
+                    workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, listIndex) => {
                         return (
-                            <div
-                                key={titleIndex}
-                                className="d-flex justify-content-start align-items-center text-clickable"
-                                style={{ marginLeft: "60px", marginBottom: "6px", fontSize: "0.9em" }}
-                                onClick={() => {
-                                    setCurrentWorkspaceIdx(workspaceIndex);
-                                    setCurrentFolderIdx(folderIndex);
-                                    setCurrentListIdx(titleIndex);
-                                }}
-                            >
-                                <ListIcon />
-                                <span className="mx-2"> {listTitle} </span>
-                            </div>
+                            <List
+                                isDarkTab={isDarkTab}
+                                workspaceIndex={workspaceIndex}
+                                folderIndex={folderIndex}
+                                listIndex={listIndex}
+                                listTitle={listTitle}
+
+                                currentWorkspaceIdx={currentWorkspaceIdx}
+                                currentFolderIdx={currentFolderIdx}
+                                currentListIdx={currentListIdx}
+
+                                setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
+                                setCurrentFolderIdx={setCurrentFolderIdx}
+                                setCurrentListIdx={setCurrentListIdx}
+                            />
                         );
                     })
                     :

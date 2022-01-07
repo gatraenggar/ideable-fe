@@ -8,6 +8,7 @@ export default function ContentList({
     isDarkTab,
     currentWorkspaceIdx,
     currentFolderIdx,
+    currentListIdx,
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
     setCurrentListIdx,
@@ -58,6 +59,7 @@ export default function ContentList({
 
                                         currentWorkspaceIdx={currentWorkspaceIdx}
                                         currentFolderIdx={currentFolderIdx}
+                                        currentListIdx={currentListIdx}
 
                                         setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                                         setCurrentFolderIdx={setCurrentFolderIdx}

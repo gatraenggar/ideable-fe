@@ -12,6 +12,7 @@ export default function Workspace({
 
     currentWorkspaceIdx,
     currentFolderIdx,
+    currentListIdx,
 
     setCurrentWorkspaceIdx,
     setCurrentFolderIdx,
@@ -108,6 +109,7 @@ export default function Workspace({
 
                                     currentWorkspaceIdx={currentWorkspaceIdx}
                                     currentFolderIdx={currentFolderIdx}
+                                    currentListIdx={currentListIdx}
 
                                     setCurrentWorkspaceIdx={setCurrentWorkspaceIdx}
                                     setCurrentFolderIdx={setCurrentFolderIdx}

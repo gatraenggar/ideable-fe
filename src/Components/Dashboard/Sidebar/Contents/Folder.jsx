@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { FolderIcon, ListIcon } from "../../Utils";
 import httpDeleteFolder from "../../../../API/HTTP/DeleteFolder";
+import ListFormLayer from "../../Components/ListFormLayer";
 
 export default function Folder({
     isDarkTab,
@@ -19,6 +20,7 @@ export default function Folder({
     const { workspaces } = useContext(WorkspaceContext);
     const [showList, setShowList] = useState(false);
     const [isOptionOpen, setIsOptionOpen] = useState(false);
+    const [isListFormOpen, setIsListFormOpen] = useState(false);
 
     useEffect(() => {
         if (
@@ -46,52 +48,61 @@ export default function Folder({
     };
 
     return (
-        <div
-            className={`d-flex justify-content-between align-items-center p-1 hover-trigger ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
-            style={{
-                marginBottom: "6px",
-            }}
-            onClick={() => {
-                setShowList(!showList)
-                setCurrentWorkspaceIdx(workspaceIndex);
-                setCurrentFolderIdx(folderIndex);
-                setCurrentListIdx(null);
-            }}
-        >
-            <div style={{ marginLeft: "30px", marginTop: "2px", fontSize: "0.9em" }}>
-                <div
-                    className="d-flex justify-content-start align-items-center text-clickable"
-                    onClick={() => setIsOptionOpen(false)}
-                >
-                    <FolderIcon isOpen={showList} />
-                    <span className="mx-2"> {folderTitle} </span>
+        <>
+            <div
+                className={`d-flex justify-content-between align-items-center p-1 hover-trigger ${isDarkTab ? "dark-ws-icon-hover" : "light-ws-icon-hover"}`}
+                style={{
+                    marginBottom: "6px",
+                }}
+                onClick={() => {
+                    setShowList(!showList);
+                    setCurrentWorkspaceIdx(workspaceIndex);
+                    setCurrentFolderIdx(folderIndex);
+                    setCurrentListIdx(null);
+                }}
+            >
+                <div className="text-clickable" style={{ marginLeft: "30px", marginTop: "2px", fontSize: "0.9em" }}>
+                    <div
+                        className="d-flex justify-content-start align-items-center text-clickable"
+                        onClick={() => setIsOptionOpen(false)}
+                    >
+                        <FolderIcon isOpen={showList} />
+                        <span className="mx-2"> {folderTitle} </span>
+                    </div>
+
+                    <WorkspaceContext.Consumer>
+                        {({ fetchContents }) => (
+                            <div className={isDarkTab ? "dark-dropdown-content" : "light-dropdown-content"} hidden={!isOptionOpen} >
+                                <div onClick={() => setIsListFormOpen(true)}>
+                                    + Add List
+                                </div>
+
+                                <div>
+                                    ~ Change Folder Name
+                                </div>
+
+                                <div onClick={() => deleteFolder(workspaces[workspaceIndex].uuid, workspaces[workspaceIndex].folders[folderIndex].uuid, fetchContents)}>
+                                    -- Delete Folder
+                                </div>
+                            </div>
+                        )}
+                    </WorkspaceContext.Consumer>
+
+                    <ListFormLayer
+                        isListFormOpen={isListFormOpen}
+                        setIsListFormOpen={setIsListFormOpen}
+                        workspaceID={workspaces[workspaceIndex].uuid}
+                        folderID={workspaces[workspaceIndex].folders[folderIndex].uuid}
+                    />
                 </div>
 
-                <WorkspaceContext.Consumer>
-                    {({ fetchContents }) => (
-                        <div className={isDarkTab ? "dark-dropdown-content" : "light-dropdown-content"} hidden={!isOptionOpen} >
-                            <div onClick={() => { }}>
-                                + Add List
-                            </div>
-
-                            <div>
-                                ~ Change Folder Name
-                            </div>
-
-                            <div onClick={() => deleteFolder(workspaces[workspaceIndex].uuid, workspaces[workspaceIndex].folders[folderIndex].uuid, fetchContents)}>
-                                -- Delete Folder
-                            </div>
-                        </div>
-                    )}
-                </WorkspaceContext.Consumer>
-            </div>
-
-            <div
-                className="mx-1 display-on-hover"
-                onClick={() => setIsOptionOpen(!isOptionOpen)}
-                style={{ cursor: "pointer" }}
-            >
-                ?
+                <div
+                    className="mx-1 display-on-hover"
+                    onClick={() => setIsOptionOpen(!isOptionOpen)}
+                    style={{ cursor: "pointer" }}
+                >
+                    ?
+                </div>
             </div>
 
             {
@@ -116,6 +127,6 @@ export default function Folder({
                     :
                     null
             }
-        </div>
+        </>
     );
 }

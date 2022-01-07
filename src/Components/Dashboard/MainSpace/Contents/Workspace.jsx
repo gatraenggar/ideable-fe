@@ -43,7 +43,7 @@ export default function Workspace({
                                 Clean like a brand new workspace here...
                             </h4>
 
-                            <button className="btn btn-secondary" onClick={() => setIsFolderFormOpen(!isFolderFormOpen)}>
+                            <button className="btn btn-secondary" onClick={() => setIsFolderFormOpen(true)}>
                                 Add Folder
                             </button>
 

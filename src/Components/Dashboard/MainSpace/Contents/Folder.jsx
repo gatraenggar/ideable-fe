@@ -1,6 +1,7 @@
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import List from "./List";
+import ListFormLayer from "../../Components/ListFormLayer";
 
 export default function Folder({
   workspaceTitle,
@@ -10,6 +11,7 @@ export default function Folder({
   currentListIdx,
 }) {
   const { workspaces } = useContext(WorkspaceContext);
+  const [isListFormOpen, setIsListFormOpen] = useState(false);
 
   return (
     <div key={folderIndex}>
@@ -22,7 +24,7 @@ export default function Folder({
           workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, listIndex) => {
             return (
               (currentListIdx !== null && listIndex === currentListIdx)
-              || currentListIdx === null ?
+                || currentListIdx === null ?
                 <div key={listIndex} >
                   <List
                     title={listTitle}
@@ -36,8 +38,25 @@ export default function Folder({
             );
           })
           :
-          <div className="w-100 p-3 text-secondary">
-            You have no list in this folder.
+          <div className="d-flex gap-2 w-100 p-3 text-secondary">
+            <div>
+              You have no list in this folder.
+            </div>
+
+            <button
+              className="btn btn-secondary"
+              onClick={() => setIsListFormOpen(true)}
+              style={{ height: "25px", padding: "0 5px", fontSize: "12px" }}
+            >
+              Create List
+            </button>
+
+            <ListFormLayer
+              isListFormOpen={isListFormOpen}
+              setIsListFormOpen={setIsListFormOpen}
+              workspaceID={workspaces[workspaceIndex].uuid}
+              folderID={workspaces[workspaceIndex].folders[folderIndex].uuid}
+            />
           </div>
       }
     </div>

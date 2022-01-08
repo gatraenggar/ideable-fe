@@ -112,6 +112,7 @@ export default function Folder({
                     workspaces[workspaceIndex].folders[folderIndex].lists.map(({ name: listTitle }, listIndex) => {
                         return (
                             <List
+                                key={listIndex}
                                 isDarkTab={isDarkTab}
                                 workspaceIndex={workspaceIndex}
                                 folderIndex={folderIndex}

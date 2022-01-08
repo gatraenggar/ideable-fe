@@ -1,16 +1,18 @@
 import { useState } from "react";
 import Story from "./Story";
-import { DropdownArrowIcon, AssigneeIcon, PriorityFlag } from "./Utils";
+import StoryForm from "./StoryForm";
+import { DropdownArrowIcon } from "./Utils";
 
-export default function StoryStatus({ 
-  title, 
-  stories, 
+export default function StoryFrame({
+  title,
+  stories,
   labelColor,
   workspaceIndex,
   folderIndex,
   listIndex,
 }) {
   const [isStoriesOpen, setIsStoriesOpen] = useState(true);
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
   return (
     <div className="d-flex mx-1 my-3">
@@ -56,7 +58,7 @@ export default function StoryStatus({
                   stories.length ?
                     stories.map((story, index) => {
                       return (
-                        <Story 
+                        <Story
                           key={index}
                           workspaceIndex={workspaceIndex}
                           folderIndex={folderIndex}
@@ -66,40 +68,35 @@ export default function StoryStatus({
                       );
                     })
                     :
-                    <AddNewStory />
+                    <StoryForm
+                      workspaceIndex={workspaceIndex}
+                      folderIndex={folderIndex}
+                      listIndex={listIndex}
+                    />
                 }
-                <div className="m-1 px-2 py-1 rounded-top rounded-bottom text-secondary new-task-btn" hidden={!stories.length} style={{ width: "fit-content", fontSize: "12px", cursor: "pointer" }}>
+                <div
+                  className="m-1 px-2 py-1 rounded-top rounded-bottom text-secondary new-task-btn"
+                  hidden={!stories.length || isFormOpen}
+                  onClick={() => setIsFormOpen(true)}
+                  style={{ width: "fit-content", fontSize: "12px", cursor: "pointer" }}
+                >
                   + New Task
+                </div>
+
+                <div hidden={!isFormOpen}>
+                  <StoryForm
+                    inputActive
+                    setIsFormOpen={setIsFormOpen}
+                    workspaceIndex={workspaceIndex}
+                    folderIndex={folderIndex}
+                    listIndex={listIndex}
+                  />
                 </div>
               </>
               :
               null
           }
         </div>
-      </div>
-    </div>
-  );
-}
-
-function AddNewStory() {
-  return (
-    <div className="d-flex justify-content-between px-3 py-2 bg-white">
-      <div>
-        <div style={{ display: "inline-block" }}>
-          <span style={{ color: "lightgrey" }}>
-            &#9643; &nbsp; Add New Story
-          </span>
-        </div>
-      </div>
-
-      <div className="d-flex justify-content-around" style={{ width: "16%" }}>
-        <span className="mx-1">
-          <AssigneeIcon />
-        </span>
-
-        <span className="mx-1">
-          <PriorityFlag color={"lightgrey"} />
-        </span>
       </div>
     </div>
   );

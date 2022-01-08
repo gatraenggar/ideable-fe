@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { DropdownArrowIcon } from "./Utils";
-import StoryStatus from "./StoryStatus";
+import StoryFrame from "./StoryFrame";
 import httpGetStories from "../../../../API/HTTP/GetStories";
 
-export default function List({ title, workspaceIndex, folderIndex, listIndex }) {
+export default function List({
+  title,
+  workspaceIndex,
+  folderIndex,
+  listIndex,
+}) {
   const { workspaces } = useContext(WorkspaceContext);
   const [isListOpen, setIsListOpen] = useState(true);
 
@@ -91,7 +96,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
       <div className={`${isListOpen ? "" : "d-none"} my-3`}>
         {
           sortedStories.done.length ?
-            <StoryStatus
+            <StoryFrame
               title={"DONE"}
               stories={sortedStories.done}
               labelColor={"bg-success"}
@@ -105,7 +110,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
 
         {
           sortedStories.inEvaluation.length ?
-            <StoryStatus
+            <StoryFrame
               title={"IN EVALUATION"}
               stories={sortedStories.inEvaluation}
               labelColor={"bg-info"}
@@ -119,7 +124,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
 
         {
           sortedStories.inReview.length ?
-            <StoryStatus
+            <StoryFrame
               title={"IN REVIEW"}
               stories={sortedStories.inReview}
               labelColor={"bg-primary"}
@@ -133,7 +138,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
 
         {
           sortedStories.inProgress.length ?
-            <StoryStatus
+            <StoryFrame
               title={"IN PROGRESS"}
               stories={sortedStories.inProgress}
               labelColor={"bg-warning"}
@@ -147,7 +152,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
 
         {
           sortedStories.todo.length ?
-            <StoryStatus
+            <StoryFrame
               title={"TODO"}
               stories={sortedStories.todo}
               labelColor={"bg-secondary"}
@@ -165,7 +170,14 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
             && !sortedStories.inReview.length
             && !sortedStories.inProgress.length
             && !sortedStories.todo.length ?
-            <StoryStatus title={"TODO"} stories={[]} labelColor={"bg-secondary"} />
+            <StoryFrame
+              title={"TODO"}
+              stories={[]}
+              labelColor={"bg-secondary"}
+              workspaceIndex={workspaceIndex}
+              folderIndex={folderIndex}
+              listIndex={listIndex}
+            />
             :
             null
         }

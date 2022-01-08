@@ -79,7 +79,7 @@ export default function List({ title, workspaceIndex, folderIndex, listIndex }) 
   }, [workspaces])
 
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <div
         className="d-flex align-items-center my-1 fw-bold" style={{ fontSize: "1.05em", cursor: "pointer" }}
         onClick={async () => setIsListOpen(!isListOpen)}

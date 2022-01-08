@@ -14,7 +14,7 @@ export default function Folder({
   const [isListFormOpen, setIsListFormOpen] = useState(false);
 
   return (
-    <div key={folderIndex}>
+    <div className="mb-4">
       <div className="">
         {workspaceTitle} &gt; {folderTitle}
       </div>

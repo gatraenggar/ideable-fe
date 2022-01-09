@@ -39,13 +39,17 @@ export default function StoryFrame({
           </div>
 
 
-          <div className="d-flex justify-content-around mx-3" style={{ width: "16%" }}>
+          <div className="d-flex justify-content-around mx-3" style={{ width: "25%" }}>
             <div className="px-2 py-1" hidden={!isStoriesOpen}>
               Assignee
             </div>
 
             <div className="px-2 py-1" hidden={!isStoriesOpen}>
               Priority
+            </div>
+
+            <div className="px-2 py-1" hidden={!isStoriesOpen} title="Hover the column below">
+              Settings
             </div>
           </div>
         </div>

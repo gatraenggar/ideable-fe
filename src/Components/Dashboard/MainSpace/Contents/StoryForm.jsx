@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AssigneeIcon, PriorityFlag } from "./Utils";
+import { AssigneeIcon, PriorityFlag, SettingGear } from "./Utils";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import httpPostStory from "../../../../API/HTTP/PostStory";
 
@@ -45,7 +45,7 @@ export default function StoryForm({
       <WorkspaceContext.Consumer>
         {
           ({ fetchContents }) => (
-            <div style={{ display: "inline-block", width: "85%", }}>
+            <div style={{ display: "inline-block", width: "75%", }}>
               &#9643; &nbsp;
 
               <input
@@ -119,14 +119,17 @@ export default function StoryForm({
         }
       </WorkspaceContext.Consumer>
 
-
-      <div className="d-flex justify-content-around" style={{ width: "16%" }}>
-        <span className="mx-1">
+      <div className="row row-cols-3 justify-content-center mx-1" style={{ width: "25%" }}>
+        <span className="col text-center">
           <AssigneeIcon />
         </span>
 
-        <span className="mx-1">
+        <span className="col text-center">
           <PriorityFlag color={"lightgrey"} />
+        </span>
+
+        <span className="col text-center">
+          <SettingGear />
         </span>
       </div>
     </div>

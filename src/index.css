@@ -19,8 +19,17 @@ code {
   display: none;
 }
 
-.hover-trigger:hover > .display-on-hover {
+.hover-trigger:hover > .display-on-hover,
+.hover-trigger:hover > .hover-trigger-layer > .display-on-hover {
   display: block;
+}
+
+.hidden-on-hover {
+  display: inline-block;
+}
+
+.hover-trigger:hover > .hover-trigger-layer > .hidden-on-hover {
+  display: none;
 }
 
 /* Dropdown */

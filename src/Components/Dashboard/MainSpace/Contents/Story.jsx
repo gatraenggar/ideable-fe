@@ -11,6 +11,8 @@ export default function Story({
     folderIndex,
     listIndex,
     storyIndex,
+    isStoryFetched,
+    setIsStoryFetched,
 }) {
     const [isTaskOpen, setIsTaskOpen] = useState(false);
     const [isTaskFetched, setIsTaskFetched] = useState(false);
@@ -32,25 +34,34 @@ export default function Story({
     };
 
     const showTask = async () => {
-        if (!isTaskFetched) {
+        if (isStoryFetched && !isTaskFetched) {
             await fetchTasks();
             setIsTaskFetched(true);
+            setIsTaskOpen(true);
+            return;
         }
+
         setIsTaskOpen(!isTaskOpen);
-        // setIsTaskOpen(true);
     };
 
     const fetchTasksCallback = useCallback(async () => {
-        await fetchTasks();
-        setIsTaskOpen(true);
-        setIsTaskFetched(true);
-
+        await showTask();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        if (isTaskOpen && !isTaskFetched) fetchTasksCallback();
-    }, [isTaskOpen, isTaskFetched, fetchTasksCallback]);
+        if (isTaskOpen && !isStoryFetched) {
+            setIsTaskOpen(false);
+            setIsTaskFetched(false);
+        };
+
+        if (isTaskOpen && isStoryFetched && !isTaskFetched) fetchTasksCallback();
+    }, [
+        isTaskOpen,
+        isStoryFetched,
+        isTaskFetched,
+        fetchTasksCallback,
+    ]);
 
     return (
         <>
@@ -64,13 +75,20 @@ export default function Story({
                 workspaceID={workspaces[workspaceIndex].uuid}
                 isTaskOpen={isTaskOpen}
                 isTaskFetched={isTaskFetched}
+                setIsTaskFetched={setIsTaskFetched}
                 setIsTaskFormOpen={setIsTaskFormOpen}
+                setIsStoryFetched={setIsStoryFetched}
                 showTask={showTask}
             />
 
             <div className="w-100">
                 {
-                    isTaskOpen && isTaskFetched ?
+                    isTaskOpen && isStoryFetched && isTaskFetched &&
+                        workspaces[workspaceIndex]
+                            .folders[folderIndex]
+                            .lists[listIndex]
+                            .stories[storyIndex]
+                            .tasks ?
                         workspaces[workspaceIndex]
                             .folders[folderIndex]
                             .lists[listIndex]
@@ -79,7 +97,10 @@ export default function Story({
                                 return (
                                     <div key={index}>
                                         <Task
+                                            workspaceID={workspaces[workspaceIndex].uuid}
                                             task={task}
+                                            setIsTaskFetched={setIsTaskFetched}
+                                            setIsStoryFetched={setIsStoryFetched}
                                         />
                                     </div>
                                 );
@@ -98,8 +119,8 @@ export default function Story({
                         storyIndex={storyIndex}
 
                         setIsFormOpen={setIsTaskFormOpen}
-                        setIsTaskOpen={setIsTaskOpen}
                         setIsTaskFetched={setIsTaskFetched}
+                        setIsStoryFetched={setIsStoryFetched}
                     />
                 </div>
             </div>
@@ -112,7 +133,9 @@ function StoryRow({
     workspaceID,
     isTaskOpen,
     isTaskFetched,
+    setIsTaskFetched,
     setIsTaskFormOpen,
+    setIsStoryFetched,
     showTask,
 }) {
     const [isSettingShown, setIsSettingShown] = useState(false);
@@ -124,7 +147,7 @@ function StoryRow({
         3: 'red',
     };
 
-    const deleteStory = async (workspaceID, storyID, fetchContents) => {
+    const deleteStory = async (workspaceID, storyID) => {
         if (!window.confirm("Are you sure to delete this story?")) return;
 
         const httpResponse = await httpDeleteStory(workspaceID, storyID);
@@ -132,7 +155,8 @@ function StoryRow({
 
         if (httpResponse.status !== "success") return;
 
-        await fetchContents();
+        setIsTaskFetched(false);
+        setIsStoryFetched(false);
         setIsDropdownOpen(false);
     };
 
@@ -141,7 +165,7 @@ function StoryRow({
     return (
         <>
             <div
-                className="d-flex justify-content-between px-3 py-2 bg-white"
+                className="d-flex justify-content-between px-3 py-2 highlight-on-hover"
                 style={{ maxHeight: "40px" }}
                 onMouseEnter={() => setIsSettingShown(true)}
                 onMouseLeave={() => { if (!isDropdownOpen) setIsSettingShown(false); }}
@@ -195,21 +219,9 @@ function StoryRow({
                                         style={{ position: "relative", minWidth: "max-content" }}
                                         hidden={!isDropdownOpen}
                                     >
-                                        <WorkspaceContext.Consumer>
-                                            {
-                                                ({ fetchContents }) => (
-                                                    <div
-                                                        onClick={() => deleteStory(
-                                                            workspaceID,
-                                                            story.uuid,
-                                                            fetchContents,
-                                                        )}
-                                                    >
-                                                        - Delete Story
-                                                    </div>
-                                                )
-                                            }
-                                        </WorkspaceContext.Consumer>
+                                        <div onClick={() => deleteStory(workspaceID, story.uuid)}>
+                                            - Delete Story
+                                        </div>
                                     </div>
                                 </>
                                 :

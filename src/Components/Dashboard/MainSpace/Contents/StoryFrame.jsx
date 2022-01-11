@@ -10,9 +10,11 @@ export default function StoryFrame({
   workspaceIndex,
   folderIndex,
   listIndex,
+  isStoryFetched,
+  setIsStoryFetched,
 }) {
   const [isStoriesOpen, setIsStoriesOpen] = useState(true);
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
     <div className="d-flex mx-1 my-3">
@@ -68,6 +70,8 @@ export default function StoryFrame({
                           folderIndex={folderIndex}
                           listIndex={listIndex}
                           storyIndex={index}
+                          isStoryFetched={isStoryFetched}
+                          setIsStoryFetched={setIsStoryFetched}
                         />
                       );
                     })
@@ -76,6 +80,7 @@ export default function StoryFrame({
                       workspaceIndex={workspaceIndex}
                       folderIndex={folderIndex}
                       listIndex={listIndex}
+                      setIsStoryFetched={setIsStoryFetched}
                     />
                 }
                 <div
@@ -94,6 +99,7 @@ export default function StoryFrame({
                     workspaceIndex={workspaceIndex}
                     folderIndex={folderIndex}
                     listIndex={listIndex}
+                    setIsStoryFetched={setIsStoryFetched}
                   />
                 </div>
               </>

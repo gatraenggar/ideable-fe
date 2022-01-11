@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { WorkspaceContext } from "../../../../Pages/Dashboard";
 import { DropdownArrowIcon } from "./Utils";
 import StoryFrame from "./StoryFrame";
@@ -12,6 +12,7 @@ export default function List({
 }) {
   const { workspaces } = useContext(WorkspaceContext);
   const [isListOpen, setIsListOpen] = useState(true);
+  const [isStoryFetched, setIsStoryFetched] = useState(false);
 
   const [sortedStories, setSortedStories] = useState({
     todo: [],
@@ -76,12 +77,27 @@ export default function List({
       inEvaluation: storiesMap.inEvaluation,
       done: storiesMap.done,
     });
+
+    setIsStoryFetched(true);
   };
+
+  const fetchStoriesCallback = useCallback(async () => {
+    setIsListOpen(false);
+    await fetchStories();
+    setIsListOpen(true);
+    setIsStoryFetched(true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isListOpen && !isStoryFetched) fetchStoriesCallback();
+  }, [isListOpen, isStoryFetched, fetchStoriesCallback]);
 
   useEffect(() => {
     fetchStories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workspaces])
+  }, [workspaces]);
 
   return (
     <div className="mb-3">
@@ -103,6 +119,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null
@@ -117,6 +135,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null
@@ -131,6 +151,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null
@@ -145,6 +167,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null
@@ -159,6 +183,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null
@@ -177,6 +203,8 @@ export default function List({
               workspaceIndex={workspaceIndex}
               folderIndex={folderIndex}
               listIndex={listIndex}
+              isStoryFetched={isStoryFetched}
+              setIsStoryFetched={setIsStoryFetched}
             />
             :
             null

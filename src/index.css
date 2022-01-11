@@ -32,6 +32,15 @@ code {
   display: none;
 }
 
+.highlight-on-hover{
+ background-color: white;
+}
+
+.highlight-on-hover:hover {
+  background-color: #f8f8f8;
+  color: rgb(47, 212, 196);
+}
+
 /* Dropdown */
 .light-dropdown-content {
   position: absolute;

@@ -3,9 +3,9 @@ import { httpURI } from "../../Constants/httpURI"
  * @param form Javascript object
  * @returns JSON
  */
- const httpGetEmailVerification = async (authToken) => {
+ const httpPutVerifyEmail = async (authToken) => {
     const response = await fetch(`${httpURI}/v1/auth/email-verification/${authToken}`, {
-        method: 'GET',
+        method: 'PUT',
         headers: {
             'Content-Type' : 'application/json',
         },
@@ -16,4 +16,4 @@ import { httpURI } from "../../Constants/httpURI"
     return response
 }
 
-export default httpGetEmailVerification
+export default httpPutVerifyEmail

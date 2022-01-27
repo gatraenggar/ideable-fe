@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import httpGetEmailVerification from '../API/HTTP/GetEmailVerification';
+import httpPutVerifyEmail from '../API/HTTP/PutVerifyEmail';
 import httpGetUserStatus from '../API/HTTP/GetUserStatus';
 
 export default function EmailVerification() {
@@ -15,7 +15,7 @@ export default function EmailVerification() {
   }, []);
 
   const verifyEmail = async () => {
-    const getEmailVerifResponse = await httpGetEmailVerification(authToken);
+    const getEmailVerifResponse = await httpPutVerifyEmail(authToken);
     setIsHttpLoading(false);
 
     if (getEmailVerifResponse.status === "failed") {
